@@ -6,12 +6,11 @@ use api\behaviors\verify\VerifyControl;
 use yii\filters\VerbFilter;
 use api\models\User;
 use yii\web\Request;
-use yii\rest\ActiveController;
+use yii\web\Controller;
 
-class LoginController extends ActiveController
+class LoginController extends Controller
 {
 	public $enableCsrfValidation=false;
-	public $modelClass = 'api\models\User';
 	
 	public function behaviors()
 	{
@@ -30,16 +29,9 @@ class LoginController extends ActiveController
 				'class'=>VerbFilter::className(),
 				'actions'=>[
 					'index'=>['post'],	
-					'update'=>['get'],
 				],					
 			],
 		];
-	}
-	
-	public function actionUpdate()
-	{
-		echo 33;
-		exit;
 	}
 	
 	public function actionIndex()
