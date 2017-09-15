@@ -37,6 +37,28 @@ class User extends \yii\db\ActiveRecord
 	const PWD_KEY = '11111111111111';
 	const PWD_SALT = 'xcpt';
 	
+	public static function findIdentityByAccessToken($token, $type = null){
+         return static::findOne([
+		     'access_token' => $token
+		 ]);
+	}
+		
+    public function getId(){
+		return $this->id;
+	}
+	
+	public function getAuthKey(){
+		return $this->authKey;
+	}
+				
+    public function validateAuthKey($authKey){
+	 	return $this->authKey === $authKey;
+	}
+	
+	public static function findIdentity($id){
+		return static::findOne($id);
+	}
+	
     /**
      * @inheritdoc
      */
