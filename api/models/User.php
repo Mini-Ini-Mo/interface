@@ -3,6 +3,8 @@
 namespace api\models;
 
 use Yii;
+use yii\web\IdentityInterface;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * This is the model class for table "xcpt_user".
@@ -31,32 +33,78 @@ use Yii;
  * @property string $login_count
  * @property integer $group_id
  */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
 	//不可以修改
 	const PWD_KEY = '11111111111111';
 	const PWD_SALT = 'xcpt';
 	
-	public static function findIdentityByAccessToken($token, $type = null){
-         return static::findOne([
-		     'access_token' => $token
-		 ]);
+	/**
+	* 生成access_token
+	*/
+	public function generateAccessToken()
+	{
+		$this->access_token = Yii::$app->security->generateRandomString().'_'.time();
 	}
+	
+	/**
+	* 校验access_token
+	*/
+	public static function accessTokenIsVaild($token)
+	{
+		if(empty($token)){
+			return false;
+		}
 		
-    public function getId(){
-		return $this->id;
+		$timestamp = (int) substr($token,strrpos($token, '_')+1);
+		$expire = Yii::$app->params['user.accessTokenExpire'];
+		return $timestamp + $expire >= time();
 	}
 	
-	public function getAuthKey(){
-		return $this->authKey;
-	}
-				
-    public function validateAuthKey($authKey){
-	 	return $this->authKey === $authKey;
+	/**
+	* 校验密码
+	*/
+	public function validatePassword($username,$password)
+	{
+		$model = static::findOne(['phone_mob'=>$username]);
+		$pwd = $this->_makePwd($password);
+		if($model->password === $pwd){
+			return true;
+		}
+		return false;
 	}
 	
-	public static function findIdentity($id){
+	public static function findIdentityByAccessToken($token,$type = null)
+	{
+		if(!static::accessTokenIsVaild($token)){
+			throw new \yii\web\UnauthorizedHttpException("token is invalid(无效的Token)");
+		}
+		
+		return static::findOne(['access_token'=>$token]);
+	}
+	
+	/**
+	* 通过id 找到身份
+	* @inheritdox
+	*/
+	public static function findIdentity($id)
+	{
 		return static::findOne($id);
+	}
+	
+	public function getId()
+	{
+		return $this->getPrimaryKey();
+	}
+	
+	public function getAuthKey()
+	{
+		return $this->auth_key;
+	}
+	
+	public function validateAuthKey($authKey)
+	{
+		return $this->getAuthKey() === $authKey;
 	}
 	
     /**
@@ -80,7 +128,7 @@ class User extends \yii\db\ActiveRecord
             [['phone_mob'], 'string', 'max' => 11],
             [['salt'], 'string', 'max' => 4],
             [['head_img'], 'string', 'max' => 100],
-            [['added_s_id'], 'string', 'max' => 255],
+            [['added_s_id,access_token,auth_key'], 'string', 'max' => 255],
             [['reg_way'], 'string', 'max' => 10],
         ];
     }
@@ -115,6 +163,22 @@ class User extends \yii\db\ActiveRecord
             'login_count' => 'Login Count',
             'group_id' => 'Group ID',
         ];
+    }
+    
+    public function fields()
+    {
+    	return [
+    		'user_id'=>'user_id',
+    		'phone'=>'phone_mob',
+    		'pwd'=>'password',
+    	];
+    }
+    
+    public function extraFields()
+    {
+    	return [
+    		'user_id',
+    	];
     }
     
     /**

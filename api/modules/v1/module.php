@@ -20,7 +20,7 @@ class module extends \yii\base\Module
         parent::init();
 
         // custom initialization code goes here
-        $config = [
+        $this->modules = [
         	'modules' => [
         		'enquiry' => [
         			'class' => 'api\modules\v1\modules\enquiry\Enquiry',

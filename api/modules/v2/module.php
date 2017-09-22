@@ -21,10 +21,13 @@ class module extends \yii\base\Module
 
         // custom initialization code goes here
         $this->modules = [
-	        'user' => [
-	            'class' => 'api\modules\v2\modules\user\User',
-	        ],
         		
 	    ];
+        
+        $this->components = [
+       
+        
+        ];
+        \Yii::$app->user->enableSession = false;
     }
 }
