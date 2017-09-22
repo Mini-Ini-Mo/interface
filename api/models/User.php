@@ -50,7 +50,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 	/**
 	* 校验access_token
 	*/
-	public static function accessTokenIsVaild($token)
+	public static function accessTokenIsValid($token)
 	{
 		if(empty($token)){
 			return false;
@@ -105,6 +105,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 	public function validateAuthKey($authKey)
 	{
 		return $this->getAuthKey() === $authKey;
+	}
+	
+	public static function findByUsername($username)
+	{
+		return static::findOne(['phone_mob'=>$username]);
 	}
 	
     /**

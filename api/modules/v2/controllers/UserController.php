@@ -23,7 +23,14 @@ class UserController extends ActiveController
 		]);
 	}
 	
-	public function login()
+	public function actions()
+	{
+		$actions = parent::actions();
+		//$actions['login'] = [$this,'login'];
+		return $actions;
+	}
+	
+	public function actionLogin()
 	{
 		$model = new LoginForm();
 		$model->setAttributes(\Yii::$app->request->post());

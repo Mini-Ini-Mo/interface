@@ -1,4 +1,6 @@
 <?php
+namespace api\models;
+
 use yii\base\Model;
 use api\models\User;
 
