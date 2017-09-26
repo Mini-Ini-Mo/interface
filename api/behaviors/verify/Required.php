@@ -3,6 +3,7 @@ namespace api\behaviors\verify;
 use yii;
 use api\behaviors\verify\VerifyInterface;
 use yii\web\Request;
+use api\components\Hint;
 
 class Required implements VerifyInterface{
 	
@@ -21,11 +22,7 @@ class Required implements VerifyInterface{
 	
 			foreach($args as $a){
 				if(!$request->get($a)){
-					echo json_encode([
-						'code'=>100,
-						'msg'=>'请求参数错误',
-					]);
-					exit;
+					Hint::info(100);
 				}
 			}
 		}

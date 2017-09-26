@@ -46,23 +46,33 @@ class VerifyControl extends ActionFilter{
 	
 	public function beforeAction($action){
 		$actionId = $this->getActionId($action);
-		if(in_array($actionId, $this->only)){
-			$index = array_search($actionId, $this->only);
-			$rules = $this->rules[$index];	
-			foreach($rules as $r){
-				$className = ucfirst($r[1]);
-				if($className == 'Required'){
-					$obj = new Required($r[0]);
-					$obj->lunch();
-				}else if($className == 'Number'){
-					$obj = new Number($r[0]);
-					$obj->lunch();
-				}else if($className == 'Phone'){
-					$obj = new Phone($r[0]);
-					$obj->lunch();
-				}
+		if(isset($this->only) && !empty($this->only)){
+			if(in_array($actionId, $this->only)){
+				$index = array_search($actionId, $this->only);
+				$rules = $this->rules[$index];	
+				$this->toDo($rules);
 			}
+		}else{
+			$rules = $this->rules[0];
+			$this->toDo($rules);
 		}
 		return true;
+	}
+	
+	private function toDo($rules)
+	{
+		foreach($rules as $r){
+			$className = ucfirst($r[1]);
+			if($className == 'Required'){
+				$obj = new Required($r[0]);
+				return $obj->lunch();
+			}else if($className == 'Number'){
+				$obj = new Number($r[0]);
+				return $obj->lunch();
+			}else if($className == 'Phone'){
+				$obj = new Phone($r[0]);
+				return $obj->lunch();
+			}
+		}
 	}
 }

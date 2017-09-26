@@ -2,6 +2,7 @@
 namespace api\models;
 use yii\db\ActiveRecord;
 use api\models\User;
+use api\components\Hint;
 
 class RegisterForm extends ActiveRecord
 {
@@ -38,11 +39,9 @@ class RegisterForm extends ActiveRecord
 			];
 			if($this->_user->save()){
 				return $this->_user;
-			}else{
-				return $this->_user->getErrors();
 			}
 		}else{
-			return null;
+			Hint::info(2002);
 		}
 	}
 	

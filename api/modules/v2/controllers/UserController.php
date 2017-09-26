@@ -1,12 +1,13 @@
 <?php
 namespace api\modules\v2\controllers;
+
 use yii\rest\ActiveController;
-use yii\helpers\ArrayHelper;
 use yii\filters\auth\QueryParamAuth;
 use api\models\LoginForm;
 use yii\web\IdentityInterface;
 use api\models\RegisterForm;
-use yii\helpers\Json;
+use api\components\Hint;
+use api\behaviors\verify\VerifyControl;
 
 class UserController extends ActiveController
 {
@@ -19,15 +20,25 @@ class UserController extends ActiveController
 	*/
 	public function behaviors()
 	{
-		return ArrayHelper::merge(parent::behaviors(),[
-				'authenticator'=>[
-					'class'=>QueryParamAuth::className(),
-					'tokenParam'=>'token',
-					'optional'=>[
-						'login','register'
-					]
-				]
-		]);
+		$behaviors = parent::behaviors();
+		$behaviors['authenticator'] = [
+			'class'=>QueryParamAuth::className(),
+			'tokenParam'=>'token',
+			'optional'=>[
+				'login','register'
+			]
+		];
+		
+		/* $behaviors['verify'] = [
+			'class'=>VerifyControl::className(),
+			'rules'=>[
+				[
+					['s','Required'],		
+				],	
+			]
+		]; */
+		
+		return $behaviors;
 	}
 	
 	/**
@@ -53,9 +64,9 @@ class UserController extends ActiveController
 		$model->setAttributes(\Yii::$app->request->post());
 		if($user = $model->register()){
 			if($user instanceof  IdentityInterface){
-				return Json::encode(['username'=>$user->phone_mob,'gid'=>$user->group_id]);
+				Hint::info(0,null,['username'=>$user->phone_mob,'gid'=>$user->group_id]);
 			}else{
-				return $user->errors;
+				Hint::info(500);
 			}
 		}
 	}
@@ -67,13 +78,14 @@ class UserController extends ActiveController
 	*/
 	public function actionLogin()
 	{
+		
 		$model = new LoginForm();
 		$model->setAttributes(\Yii::$app->request->post());
 		if($user = $model->login()){
 			if($user instanceof  IdentityInterface){
-				return $user->access_token;
+				Hint::info(0,null,['token'=>$user->access_token]);
 			}else{
-				return $user->errors;
+				Hint::info(500);
 			}
 		}
 	}

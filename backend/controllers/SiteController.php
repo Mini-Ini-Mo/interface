@@ -60,6 +60,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+    	
         return $this->render('index');
     }
 
@@ -70,6 +71,8 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+    	echo "<br><br><br>343";
+    	print_R(Yii::$app->params['code_2000']);
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
