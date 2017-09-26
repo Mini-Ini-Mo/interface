@@ -1,9 +1,8 @@
 <?php
 
-namespace api\models;
+namespace app\models;
 
 use Yii;
-use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "xcpt_user".
@@ -34,153 +33,8 @@ use yii\web\IdentityInterface;
  * @property string $access_token
  * @property string $auth_key
  */
-class User extends \yii\db\ActiveRecord implements IdentityInterface
+class User extends \yii\db\ActiveRecord
 {
-	//定义场景
-	const SCENARIO_LOGIN = 'login';
-	const SCENATIO_REGISTER = 'register';
-	const SCENATIO_CREATE = 'create';
-	
-	
-	//不可以修改
-	const PWD_KEY = '11111111111111';
-	const PWD_SALT = 'xcpt';
-	
-	/**
-	 * 生成access_token
-	 */
-	public function generateAccessToken()
-	{
-		$this->access_token = Yii::$app->security->generateRandomString().'_'.time();
-	}
-	
-	/**
-	 * 校验access_token
-	 */
-	public static function accessTokenIsVaild($token)
-	{
-		if(empty($token)){
-			return false;
-		}
-	
-		$timestamp = (int) substr($token,strrpos($token, '_')+1);
-		$expire = Yii::$app->params['user.accessTokenExpire'];
-		return $timestamp + $expire >= time();
-	}
-	
-	/**
-	* 检测用户名是否可用
-	*/
-	public function checkUsername($username)
-	{
-		$model = static::findByUsername($username);
-		if(!$model)
-			return true;
-		else 
-			return false;
-	}
-	
-	/**
-	 * 校验密码
-	 */
-	public function validatePassword($username,$password)
-	{
-		$model = static::findOne(['phone_mob'=>$username]);
-		$pwd = $this->makePwd($password);
-		if($model->password === $pwd){
-			return true;
-		}
-		return false;
-	}
-	
-	public static function findIdentityByAccessToken($token,$type = null)
-	{
-		if(!static::accessTokenIsVaild($token)){
-			throw new \yii\web\UnauthorizedHttpException("token is invalid(无效的Token)");
-		}
-	
-		return static::findOne(['access_token'=>$token]);
-	}
-	
-	/**
-	 * 通过id 找到身份
-	 * @inheritdox
-	 */
-	public static function findIdentity($id)
-	{
-		return static::findOne($id);
-	}
-	
-	/**
-	 * 获取主键
-	 * @date: 2017年9月25日 下午3:11:37
-	 * @author: cuik
-	 */
-	public function getId()
-	{
-		return $this->getPrimaryKey();
-	}
-	
-	public function getAuthKey()
-	{
-		return $this->auth_key;
-	}
-	
-	/**
-	 * 文件用途描述
-	 * @date: 2017年9月25日 下午3:11:29
-	 * @author: cuik
-	 */
-	public function validateAuthKey($authKey)
-	{
-		return $this->getAuthKey() === $authKey;
-	}
-	
-	/**
-	 * 通过用户名 返回用户记录
-	 * @date: 2017年9月25日 下午3:11:01
-	 * @author: cuik
-	 */
-	public static function findByUsername($username)
-	{
-		return static::findOne(['phone_mob'=>$username]);
-	}
-	
-	public function fields()
-	{
-		return [
-				'user_id'=>'user_id',
-				'phone'=>'phone_mob',
-				'username'=>'user_name',
-				'gid'=>'group_id'
-		];
-	}
-	
-	public function extraFields()
-	{
-		return [
-				'user_id',
-		];
-	}
-	
-	/**
-	 * 生成密码
-	 * @date: 2017年9月14日 上午10:18:43
-	 * @author: cuik
-	 */
-	public static function makePwd($pwd)
-	{
-		return md5(md5($pwd.self::PWD_KEY.self::PWD_SALT));
-	}
-	
-	public function scenarios()
-	{
-		$scenarios = parent::scenarios();
-		$scenarios[self::SCENATIO_CREATE] = ['user_name','group_id','password'];
-		return $scenarios;	
-	}
-	
-	
     /**
      * @inheritdoc
      */
