@@ -86,7 +86,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 	public function validatePassword($username,$password)
 	{
 		$model = static::findOne(['phone_mob'=>$username]);
-		$pwd = $this->makePwd($password);
+		$pwd = self::makePwd($password);
 		if($model->password === $pwd){
 			return true;
 		}
