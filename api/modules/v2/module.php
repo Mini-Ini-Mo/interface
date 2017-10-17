@@ -20,14 +20,11 @@ class module extends \yii\base\Module
         parent::init();
 
         // custom initialization code goes here
-        $this->modules = [
-        		
-	    ];
-        
-        $this->components = [
-       
-        
-        ];
+		$this->modules = [
+			 'abc' => [
+	            'class' => 'api\modules\v2\modules\abc\Module',
+	        ],
+		];      
         \Yii::$app->user->enableSession = false;
     }
 }

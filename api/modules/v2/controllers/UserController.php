@@ -7,7 +7,8 @@ use api\models\LoginForm;
 use yii\web\IdentityInterface;
 use api\models\RegisterForm;
 use api\components\Hint;
-use api\behaviors\verify\VerifyControl;
+use yii\web\MethodNotAllowedHttpException;
+use yii\filters\VerbFilter;
 
 class UserController extends ActiveController
 {
@@ -25,18 +26,18 @@ class UserController extends ActiveController
 			'class'=>QueryParamAuth::className(),
 			'tokenParam'=>'token',
 			'optional'=>[
-				'login','register'
+				'login','register','index','view'
 			]
 		];
 		
-		/* $behaviors['verify'] = [
-			'class'=>VerifyControl::className(),
-			'rules'=>[
-				[
-					['s','Required'],		
-				],	
-			]
-		]; */
+		$behaviors['verbs'] = [
+			'class'=> VerbFilter::className(),
+			'actions'=>[
+				'login' => ['post'],
+				'register'=>['post'],
+				'index'=>['get'],
+			],
+		];
 		
 		return $behaviors;
 	}
@@ -49,7 +50,7 @@ class UserController extends ActiveController
 	public function actions()
 	{
 		$actions = parent::actions();
-		unset($actions['index'],$actions['delete'],$actions['create']);
+		unset($actions['delete'],$actions['create']);
 		return $actions;
 	}
 	
@@ -78,7 +79,6 @@ class UserController extends ActiveController
 	*/
 	public function actionLogin()
 	{
-		
 		$model = new LoginForm();
 		$model->setAttributes(\Yii::$app->request->post());
 		if($user = $model->login()){
@@ -86,6 +86,15 @@ class UserController extends ActiveController
 				Hint::info(0,null,['token'=>$user->access_token]);
 			}else{
 				Hint::info(500);
+			}
+		}
+	}
+	
+	public function checkAccess($action, $model=null, $params = [])
+	{
+		if($action === 'login'){
+			if(!\Yii::$app->request->getIsPost()){
+				throw new MethodNotAllowedHttpException();
 			}
 		}
 	}

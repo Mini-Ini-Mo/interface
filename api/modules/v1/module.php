@@ -21,7 +21,6 @@ class module extends \yii\base\Module
 
         // custom initialization code goes here
         $this->modules = [
-        	'modules' => [
         		'enquiry' => [
         			'class' => 'api\modules\v1\modules\enquiry\Enquiry',
         		],
@@ -40,7 +39,6 @@ class module extends \yii\base\Module
         		'user' => [
         			'class' => 'api\modules\v1\modules\user\User',
         		],
-        	],
         ];
     }
 }

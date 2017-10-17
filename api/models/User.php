@@ -149,18 +149,40 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 	public function fields()
 	{
 		return [
-				'user_id'=>'user_id',
-				'phone'=>'phone_mob',
-				'username'=>'user_name',
-				'gid'=>'group_id'
+			'uid'=>'user_id',
+			'phone'=>'phone_mob',
+			'username'=>'user_name',
+			'gid'=>'group_id',
+			'email'=>'email',
 		];
 	}
 	
 	public function extraFields()
 	{
 		return [
-				'user_id',
+			'userInfoExt',
+			'company'
 		];
+	}
+	
+	/**
+	* Company
+	* @date: 2017年10月17日 上午9:20:34
+	* @author: cuik
+	*/
+	public function getCompany()
+	{
+		return $this->hasOne(Company::className(), ['owner_id'=>'user_id'])->where('owner_id=:uid',[':uid'=>$this->user_id]);
+	}
+	
+	/**
+	* UserInfoExt
+	* @date: 2017年9月26日 下午5:27:48
+	* @author: cuik
+	*/
+	public function getUserInfoExt()
+	{
+		return $this->hasOne(UserInfoExt::className(), ['user_id'=>'user_id'])->where('user_id=:uid',[':uid'=>$this->user_id]);
 	}
 	
 	/**
