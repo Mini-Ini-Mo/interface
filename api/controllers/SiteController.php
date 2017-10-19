@@ -13,6 +13,7 @@ use api\models\ResetPasswordForm;
 use api\models\SignupForm;
 use api\models\ContactForm;
 use yii\rest\ActiveController;
+use yii\filters\auth\QueryParamAuth;
 
 /**
  * Site controller
@@ -20,35 +21,31 @@ use yii\rest\ActiveController;
 class SiteController extends ActiveController
 {
 	public $modelClass='api\models\User';
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+
+	/**
+	 * 禁止删除此方法
+	 * @date: 2017年9月25日 下午3:05:04
+	 * @author: cuik
+	 */
+	public function behaviors()
+	{
+		$behaviors = parent::behaviors();
+		$behaviors['authenticator'] = [
+				'class'=>QueryParamAuth::className(),
+				'tokenParam'=>'token',
+				'optional'=>[
+					'login',
+				]
+		];
+
+		return $behaviors;
+	}
+
+    public function actions()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
+   		$actions = parent::actions();
+   		unset($actions['index']);
+   		return $actions;
     }
 
     /**
