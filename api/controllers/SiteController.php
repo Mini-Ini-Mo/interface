@@ -12,7 +12,6 @@ use api\models\PasswordResetRequestForm;
 use api\models\ResetPasswordForm;
 use api\models\SignupForm;
 use api\models\ContactForm;
-use yii\rest\ActiveController;
 
 /**
  * Site controller
@@ -48,16 +47,6 @@ class SiteController extends Controller
                 ],
             ],
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-    	/* $actions = parent::actions();
-        unset($actions['view'],$actions['delete'],$actions['update'],$actions['create']);
-        return $actions; */
     }
 
     /**
