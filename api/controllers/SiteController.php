@@ -12,11 +12,12 @@ use api\models\PasswordResetRequestForm;
 use api\models\ResetPasswordForm;
 use api\models\SignupForm;
 use api\models\ContactForm;
+use yii\rest\ActiveController;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends ActiveController
 {
     /**
      * @inheritdoc
@@ -54,15 +55,9 @@ class SiteController extends Controller
      */
     public function actions()
     {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
+    	$actions = parent::actions();
+        unset($actions['view'],$actions['delete'],$actions['update'],$actions['create']);
+        return $actions;
     }
 
     /**
