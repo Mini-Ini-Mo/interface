@@ -12,7 +12,7 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'api\controllers',
     'components' => [
-    	/* 'response'=>[
+    	'response'=>[
     		'class'=> 'yii\web\Response',
     		'on beforeSend' => function($event){
     			$response = $event->sender;
@@ -23,24 +23,24 @@ return [
     			];
     			$response->format = yii\web\Response::FORMAT_JSON;
     		}
-    	],  */
-        /* 'request' => [
+    	],  
+        'request' => [
             'csrfParam' => '_csrf-frontend',
         	'parsers' => [
         		'application/json' => 'yii\web\JsonParser',
         	]
-        ], */
-        'user' => [
+        ], 
+       /*  'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-        ], 
-        /* 'user' => [
+        ],  */
+        'user' => [
         	'identityClass' => 'api\models\User',
         	'enableAutoLogin' => true,
         	'enableSession' => false,
-        ], */
-       /* 'urlManager'=>[
+        ], 
+       'urlManager'=>[
         	'enablePrettyUrl' => true,
         	'showScriptName' => false,
         	'enableStrictParsing' =>true,
@@ -63,7 +63,7 @@ return [
         			'controller' => ['v2/com','site'],
         		],
         	],
-        ],  */
+        ],  
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-api',
