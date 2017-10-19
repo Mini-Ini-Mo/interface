@@ -3,8 +3,8 @@ namespace api\models;
 
 use yii\base\Model;
 use api\models\User;
-use yii\base\Response;
 use api\components\Hint;
+use yii\web\Response;
 
 class LoginForm extends Model
 {
@@ -69,7 +69,7 @@ class LoginForm extends Model
 			$this->trigger(self::GET_ACCESS_TOKEN);
 			return $this->_user;
 		}else{
-			Hint::info(2000);
+			\Yii::$app->response->statusCode = 400;
 		}
 	}
 	

@@ -9,10 +9,15 @@ use api\models\RegisterForm;
 use api\components\Hint;
 use yii\web\MethodNotAllowedHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 class UserController extends ActiveController
 {
 	public $modelClass = 'api\models\User';
+	public $serializer = [
+			'class' => 'yii\rest\Serializer',
+			'collectionEnvelope' => 'items',
+	];
 	
 	/**
 	* 禁止删除此方法
@@ -50,8 +55,35 @@ class UserController extends ActiveController
 	public function actions()
 	{
 		$actions = parent::actions();
-		unset($actions['delete'],$actions['create']);
+		unset($actions['index'],$actions['delete'],$actions['create']);
 		return $actions;
+	}
+	
+	public function actionIndex($gid=null,$phone_mob=null ,$cate_name=null)
+	{
+		$modelClass = $this->modelClass;
+		 
+		$query = $modelClass::find();
+		 
+		$condition = [];
+		 
+		if($gid){
+			$query->where(['group_id'=>$gid]);
+		}
+		 
+		if($phone_mob){
+			$query->andWhere(['phone_mob',$phone_mob]);
+		}
+		 
+		return new ActiveDataProvider([
+			'query' => $query,
+	
+			'sort'=>[
+				'defaultOrder'=>[
+					'user_id' => SORT_DESC,
+				],
+			]
+		]);
 	}
 	
 	/**

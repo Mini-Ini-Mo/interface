@@ -15,6 +15,10 @@ class ComController extends ActiveController
      * @return string
      */
     public $modelClass = 'api\models\Company';
+    public $serializer = [
+    		'class' => 'yii\rest\Serializer',
+    		//'collectionEnvelope' => 'items',
+    ];
     
     /**
      * 禁止删除此方法
@@ -28,7 +32,7 @@ class ComController extends ActiveController
     			'class'=>QueryParamAuth::className(),
     			'tokenParam'=>'token',
     			'optional'=>[
-    				'index'
+    				'index','view'
     			]
     	];
     	return $behaviors;
@@ -38,19 +42,18 @@ class ComController extends ActiveController
     {
     	$actions = parent::actions();
     	
-    	unset($actions['index'],$actions['view'],$actions['update'],$actions['create'],$actions['delete']);
+    	unset($actions['index'],$actions['update'],$actions['create'],$actions['delete']);
     	
     	return $actions;
     }
     
-    public function actionIndex($gid=null,$com_name=null ,$cate_name=null ,$limit=10)
+    public function actionIndex($gid=null,$com_name=null ,$cate_name=null)
     {
     	$modelClass = $this->modelClass;
     	
     	$query = $modelClass::find();
     	
     	$condition = [];
-    	
     	
     	if($gid){
     		$query->where(['group_id'=>$gid]);
@@ -66,10 +69,6 @@ class ComController extends ActiveController
     	
     	return new ActiveDataProvider([
     			'query' => $query,
-    	
-    			'pagination' => [
-    				'pageSize'=>$limit,	
-    			],
     		
     			'sort'=>[
     				'defaultOrder'=>[
@@ -78,4 +77,5 @@ class ComController extends ActiveController
     			]
     	]);
     }
+  
 }
