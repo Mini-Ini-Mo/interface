@@ -7,12 +7,12 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-frontend',
+    'id' => 'app-api',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'api\controllers',
     'components' => [
-    	'response'=>[
+    	/* 'response'=>[
     		'class'=> 'yii\web\Response',
     		'on beforeSend' => function($event){
     			$response = $event->sender;
@@ -23,13 +23,13 @@ return [
     			];
     			$response->format = yii\web\Response::FORMAT_JSON;
     		}
-    	], 
-        'request' => [
+    	],  */
+        /* 'request' => [
             'csrfParam' => '_csrf-frontend',
         	'parsers' => [
-        			'application/json' => 'yii\web\JsonParser',
+        		'application/json' => 'yii\web\JsonParser',
         	]
-        ],
+        ], */
         /* 'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -40,7 +40,7 @@ return [
         	'enableAutoLogin' => true,
         	'enableSession' => false,
         ],
-       'urlManager'=>[
+       /* 'urlManager'=>[
         	'enablePrettyUrl' => true,
         	'showScriptName' => false,
         	'enableStrictParsing' =>true,
@@ -52,7 +52,7 @@ return [
         				'POST login' => 'login',
         				'POST register' => 'register'
         			],
-        			//'pluralize'=>false,//禁用复数形式，建议使用
+        		//'pluralize'=>false,//禁用复数形式，建议使用
         		],
         		[
         			'class' => 'yii\rest\UrlRule',
@@ -63,7 +63,7 @@ return [
         			'controller' => ['v2/com','site'],
         		],
         	],
-        ], 
+        ],  */
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-api',
