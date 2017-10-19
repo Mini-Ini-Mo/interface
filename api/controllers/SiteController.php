@@ -34,7 +34,7 @@ class SiteController extends ActiveController
 				'class'=>QueryParamAuth::className(),
 				'tokenParam'=>'token',
 				'optional'=>[
-					'login',
+					'index',
 				]
 		];
 
