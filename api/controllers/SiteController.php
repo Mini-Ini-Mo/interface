@@ -72,7 +72,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+    	return ['欢迎进入旺材电商接口'];
     }
 
     /**
