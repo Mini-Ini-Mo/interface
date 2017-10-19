@@ -30,16 +30,16 @@ return [
         		'application/json' => 'yii\web\JsonParser',
         	]
         ], */
-        /* 'user' => [
+        'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-        ], */
-        'user' => [
+        ], 
+        /* 'user' => [
         	'identityClass' => 'api\models\User',
         	'enableAutoLogin' => true,
         	'enableSession' => false,
-        ],
+        ], */
        /* 'urlManager'=>[
         	'enablePrettyUrl' => true,
         	'showScriptName' => false,
