@@ -60,7 +60,7 @@ return [
         		],
         		[
         			'class' => 'yii\rest\UrlRule',
-        			'controller' => ['v2/com'],
+        			'controller' => ['v2/com','site'],
         		],
         	],
         ], 
