@@ -12,12 +12,14 @@ use api\models\PasswordResetRequestForm;
 use api\models\ResetPasswordForm;
 use api\models\SignupForm;
 use api\models\ContactForm;
+use yii\rest\ActiveController;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends ActiveController
 {
+	public $modelClass='api\models\User';
     /**
      * @inheritdoc
      */
@@ -56,6 +58,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+    	return [23,4454];
     	return $this->render('index');
     }
 

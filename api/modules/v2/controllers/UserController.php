@@ -61,7 +61,6 @@ class UserController extends ActiveController
 	
 	public function actionIndex($gid=null,$phone_mob=null ,$cate_name=null)
 	{
-		return [1,3];
 		$modelClass = $this->modelClass;
 		 
 		$query = $modelClass::find();
