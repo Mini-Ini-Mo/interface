@@ -17,7 +17,7 @@ use yii\rest\ActiveController;
 /**
  * Site controller
  */
-class SiteController extends ActiveController
+class SiteController extends Controller
 {
     /**
      * @inheritdoc
@@ -55,9 +55,9 @@ class SiteController extends ActiveController
      */
     public function actions()
     {
-    	$actions = parent::actions();
+    	/* $actions = parent::actions();
         unset($actions['view'],$actions['delete'],$actions['update'],$actions['create']);
-        return $actions;
+        return $actions; */
     }
 
     /**
@@ -67,7 +67,7 @@ class SiteController extends ActiveController
      */
     public function actionIndex()
     {
-    	return ['欢迎进入旺材电商接口'];
+    	return $this->render('index');
     }
 
     /**
