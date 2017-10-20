@@ -18,7 +18,7 @@ use yii\filters\auth\QueryParamAuth;
 /**
  * Site controller
  */
-class SiteController extends ActiveController
+class SiteController extends Controller
 {
 	public $modelClass='api\models\User';
 
@@ -27,7 +27,7 @@ class SiteController extends ActiveController
 	 * @date: 2017年9月25日 下午3:05:04
 	 * @author: cuik
 	 */
-	public function behaviors()
+	/* public function behaviors()
 	{
 		$behaviors = parent::behaviors();
 		$behaviors['authenticator'] = [
@@ -39,14 +39,14 @@ class SiteController extends ActiveController
 		];
 
 		return $behaviors;
-	}
+	} */
 
-    public function actions()
+    /* public function actions()
     {
    		$actions = parent::actions();
    		unset($actions['index']);
    		return $actions;
-    }
+    } */
 
     /**
      * Displays homepage.
@@ -55,7 +55,7 @@ class SiteController extends ActiveController
      */
     public function actionIndex()
     {
-    	return [23,4454];
+    	//return [23,4454];
     	return $this->render('index');
     }
 
