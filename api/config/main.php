@@ -38,10 +38,10 @@ return [
 						'enableAutoLogin' => true,
 						'enableSession' => false 
 				],
-				/* 'urlManager' => [ 
+				'urlManager' => [ 
 						'enablePrettyUrl' => true,
 						'showScriptName' => false,
-						'enableStrictParsing' => true,
+						//'enableStrictParsing' => true,
 						'rules' => [ 
 								[ 
 										'class' => 'yii\rest\UrlRule',
@@ -69,7 +69,7 @@ return [
 										] 
 								] 
 						] 
-				], */
+				], 
 				'session' => [
 						// this is the name of the session cookie used for login on the frontend
 						'name' => 'advanced-api' 
