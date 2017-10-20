@@ -12,12 +12,18 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'api\controllers',
     'components' => [
-    	
-         'user' => [
+    	'request' => [
+    				// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+    				'cookieValidationKey' => 'GF8A_0ge2uGhladXyag4ky3nUCSLYhzR',
+    				'parsers' => [
+    						'application/json' => 'yii\web\JsonParser',
+    				]
+    	],
+       /*  'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-        ],  
+        ],  */
         
         'session' => [
             // this is the name of the session cookie used for login on the frontend
