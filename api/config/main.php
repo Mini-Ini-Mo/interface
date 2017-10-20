@@ -10,7 +10,7 @@ return [
     'id' => 'app-api',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'controllerNamespace' => 'api\controllers',
+    //'controllerNamespace' => 'api\controllers',
     'components' => [
     	'response'=>[
     		'class'=> 'yii\web\Response',
