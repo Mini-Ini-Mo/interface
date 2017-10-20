@@ -65,6 +65,7 @@ class UserController extends ActiveController
 		 
 		$query = $modelClass::find();
 		 
+		return $query->one();
 		$condition = [];
 		 
 		if($gid){
