@@ -13,18 +13,22 @@ return [
     'controllerNamespace' => 'api\controllers',
     'components' => [
     	'request' => [
-    				// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-    				'cookieValidationKey' => 'GF8A_0ge2uGhladXyag4ky3nUCSLYhzR',
-    				'parsers' => [
-    						'application/json' => 'yii\web\JsonParser',
-    				]
+    		// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+    		'cookieValidationKey' => 'GF8A_0ge2uGhladXyag4ky3nUCSLYhzR',
+    		'parsers' => [
+    			'application/json' => 'yii\web\JsonParser',
+    		]
     	],
        /*  'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],  */
-        
+    		'user' => [
+    				'identityClass' => 'api\models\User',
+    				'enableAutoLogin' => true,
+    				'enableSession' => false,
+    		],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-api',
