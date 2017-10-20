@@ -41,35 +41,14 @@ return [
 				'urlManager' => [ 
 						'enablePrettyUrl' => true,
 						'showScriptName' => false,
-						//'enableStrictParsing' => true,
+						'enableStrictParsing' => true,
 						'rules' => [ 
-								[ 
-										'class' => 'yii\rest\UrlRule',
-										'controller' => [ 
-												'v2/user' 
-										],
-										'extraPatterns' => [ 
-												'POST login' => 'login',
-												'POST register' => 'register' 
-										] 
-								]
-								// 'pluralize'=>false,//禁用复数形式，建议使用
-								,
-								[ 
-										'class' => 'yii\rest\UrlRule',
-										'controller' => [ 
-												'v2/nav' 
-										] 
-								],
-								[ 
-										'class' => 'yii\rest\UrlRule',
-										'controller' => [ 
-												'v2/com',
-												'site' 
-										] 
-								] 
+							[ 
+								'class' => 'yii\rest\UrlRule',
+								'controller' => ['site'] 
+							] 
 						] 
-				], 
+				],
 				'session' => [
 						// this is the name of the session cookie used for login on the frontend
 						'name' => 'advanced-api' 
