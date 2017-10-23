@@ -85,10 +85,10 @@ return [
 		'params' => $params,
 		'modules' => [ 
 				'v1' => [ 
-						'class' => 'api\modules\v1\Module' 
+						'class' => 'api\modules\v1\module' 
 				],
 				'v2' => [ 
-						'class' => 'api\modules\v2\Module' 
+						'class' => 'api\modules\v2\module' 
 				] 
 		] 
 ];
