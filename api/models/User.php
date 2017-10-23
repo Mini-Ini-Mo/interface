@@ -51,7 +51,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 	 */
 	public function generateAccessToken()
 	{
-		$this->access_token = Yii::$app->security->generateRandomString().'_'.time();
+		self::$access_token = Yii::$app->security->generateRandomString().'_'.time();
 	}
 	
 	/**
