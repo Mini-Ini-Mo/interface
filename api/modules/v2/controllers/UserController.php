@@ -115,7 +115,12 @@ class UserController extends ActiveController
 		$model->setAttributes(\Yii::$app->request->post());
 		if($user = $model->login()){
 			if($user instanceof  IdentityInterface){
-				Hint::info(0,null,['token'=>$user->access_token]);
+				Hint::info(0,null,[
+					'token'=>$user->access_token,
+					'uid'=>$user->user_id,
+					'username'=>$user->user_name,
+					'gid'=>$user->group_id,
+				]);
 			}else{
 				Hint::info(500);
 			}

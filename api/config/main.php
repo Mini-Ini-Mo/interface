@@ -34,11 +34,11 @@ return [
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],  */
     		'user' => [ 
-						'identityClass' => 'api\models\User',
-						'enableAutoLogin' => true,
-						'enableSession' => false 
-				],
-				'urlManager'=>[
+				'identityClass' => 'api\models\User',
+				'enableAutoLogin' => true,
+				'enableSession' => false 
+			],
+			'urlManager'=>[
     		'enablePrettyUrl' => true,
     		'showScriptName' => false,
     		'enableStrictParsing' =>true,
