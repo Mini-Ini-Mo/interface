@@ -4,11 +4,12 @@ namespace api\modules\v2\controllers;
 use yii\rest\ActiveController;
 use yii\filters\auth\QueryParamAuth;
 use yii\data\ActiveDataProvider;
+use Codeception\Verify;
 
 /**
  * Default controller for the `company` module
  */
-class ComController extends ActiveController
+class CompanyController extends ActiveController
 {
     /**
      * Renders the index view for the module
@@ -16,9 +17,9 @@ class ComController extends ActiveController
      */
     public $modelClass = 'api\models\Company';
     public $serializer = [
-    		'class' => 'yii\rest\Serializer',
-    		//'collectionEnvelope' => 'items',
-    ];
+			'class' => 'yii\rest\Serializer',
+			'collectionEnvelope' => 'items',
+	];
     
     /**
      * 禁止删除此方法
@@ -47,16 +48,18 @@ class ComController extends ActiveController
     	return $actions;
     }
     
-    public function actionIndex($gid=null,$com_name=null ,$cate_name=null)
+    public function actionIndex($gid=null,$verify=null,$com_name=null ,$cate_name=null)
     {
     	$modelClass = $this->modelClass;
     	
     	$query = $modelClass::find();
-    	
-    	$condition = [];
-    	
+ 
     	if($gid){
     		$query->where(['group_id'=>$gid]);
+    	}
+    	
+    	if($verify){
+    		$query->andWhere(['com_verify_status'=>$verify]);
     	}
     	
     	if($com_name){
@@ -69,7 +72,7 @@ class ComController extends ActiveController
     	
     	return new ActiveDataProvider([
     			'query' => $query,
-    		
+    			
     			'sort'=>[
     				'defaultOrder'=>[
     					'com_id' => SORT_DESC,

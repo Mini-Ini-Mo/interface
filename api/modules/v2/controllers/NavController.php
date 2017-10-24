@@ -55,4 +55,5 @@ class NavController extends ActiveController
 		
 		return $data;
 	}
+	
 }
