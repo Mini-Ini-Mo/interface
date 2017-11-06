@@ -7,13 +7,13 @@ use Yii;
 /**
  * This is the model class for table "xcpt_community".
  *
- * @property string $qid
- * @property string $shequ_name
- * @property string $shequ_index_face
- * @property string $shequ_pinyin
+ * @property string $id
+ * @property string $name
+ * @property string $cover
+ * @property string $spell
  * @property integer $enable
  * @property integer $sort
- * @property integer $cqid
+ * @property integer $pid
  */
 class Community extends \yii\db\ActiveRecord
 {
@@ -31,13 +31,13 @@ class Community extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shequ_name', 'shequ_index_face', 'shequ_pinyin', 'enable'], 'required'],
-            [['enable', 'sort', 'cqid'], 'integer'],
-            [['shequ_name'], 'string', 'max' => 60],
-            [['shequ_index_face'], 'string', 'max' => 200],
-            [['shequ_pinyin'], 'string', 'max' => 30],
-            [['shequ_name'], 'unique'],
-            [['shequ_pinyin'], 'unique'],
+            [['name', 'cover', 'spell', 'enable'], 'required'],
+            [['enable', 'sort', 'pid'], 'integer'],
+            [['name'], 'string', 'max' => 60],
+            [['cover'], 'string', 'max' => 200],
+            [['spell'], 'string', 'max' => 30],
+            [['name'], 'unique'],
+            [['spell'], 'unique'],
         ];
     }
 
@@ -47,13 +47,13 @@ class Community extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'qid' => 'Qid',
-            'shequ_name' => 'Shequ Name',
-            'shequ_index_face' => 'Shequ Index Face',
-            'shequ_pinyin' => 'Shequ Pinyin',
+            'id' => 'id',
+            'name' => 'Shequ Name',
+            'cover' => 'Shequ Index Face',
+            'spell' => 'Shequ Pinyin',
             'enable' => 'Enable',
             'sort' => 'Sort',
-            'cqid' => 'Cqid',
+            'pid' => 'pid',
         ];
     }
 }

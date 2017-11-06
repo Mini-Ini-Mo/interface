@@ -59,7 +59,7 @@ class UserController extends ActiveController
 		return $actions;
 	}
 	
-	public function actionIndex($gid=null,$phone_mob=null ,$cate_name=null)
+	public function actionIndex($gid=null,$phone=null ,$cate_name=null)
 	{
 		$modelClass = $this->modelClass;
 		 
@@ -68,11 +68,11 @@ class UserController extends ActiveController
 		$condition = [];
 		 
 		if($gid){
-			$query->where(['group_id'=>$gid]);
+			$query->where(['gid'=>$gid]);
 		}
 		 
-		if($phone_mob){
-			$query->andWhere(['phone_mob',$phone_mob]);
+		if($phone){
+			$query->andWhere(['phone',$phone]);
 		}
 		 
 		return new ActiveDataProvider([
@@ -97,7 +97,7 @@ class UserController extends ActiveController
 		$model->setAttributes(\Yii::$app->request->post());
 		if($user = $model->register()){
 			if($user instanceof  IdentityInterface){
-				Hint::info(0,null,['username'=>$user->phone_mob,'gid'=>$user->group_id]);
+				Hint::info(0,null,['username'=>$user->phone,'gid'=>$user->gid]);
 			}else{
 				Hint::info(500);
 			}
@@ -119,7 +119,7 @@ class UserController extends ActiveController
 					'token'=>$user->access_token,
 					'uid'=>$user->user_id,
 					'username'=>$user->user_name,
-					'gid'=>$user->group_id,
+					'gid'=>$user->gid,
 				]);
 			}else{
 				Hint::info(500);

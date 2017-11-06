@@ -48,26 +48,26 @@ class CompanyController extends ActiveController
     	return $actions;
     }
     
-    public function actionIndex($gid=null,$verify=null,$com_name=null ,$cate_name=null)
+    public function actionIndex($gid=null,$verify=null,$name=null ,$cate_name=null)
     {
     	$modelClass = $this->modelClass;
     	
     	$query = $modelClass::find();
  
     	if($gid){
-    		$query->where(['group_id'=>$gid]);
+    		$query->where(['gid'=>$gid]);
     	}
     	
     	if($verify){
-    		$query->andWhere(['com_verify_status'=>$verify]);
+    		$query->andWhere(['verify_status'=>$verify]);
     	}
     	
-    	if($com_name){
-    		$query->andFilterWhere(['like','com_name',$com_name]);
+    	if($name){
+    		$query->andFilterWhere(['like','name',$name]);
     	}
     	
     	if($cate_name){
-    		$query->andFilterWhere(['like','com_main_production',$cate_name]);
+    		$query->andFilterWhere(['like','main_production',$cate_name]);
     	}
     	
     	return new ActiveDataProvider([

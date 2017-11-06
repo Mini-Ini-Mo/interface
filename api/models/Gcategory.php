@@ -7,12 +7,11 @@ use Yii;
 /**
  * This is the model class for table "xcpt_gcategory".
  *
- * @property string $gcate_id
- * @property integer $com_id
- * @property string $gcate_name
- * @property string $parent_id
- * @property string $sort_order
- * @property integer $if_show
+ * @property string $id
+ * @property string $name
+ * @property string $pid
+ * @property string $sort
+ * @property integer $is_show
  * @property string $unit
  */
 class Gcategory extends \yii\db\ActiveRecord
@@ -31,8 +30,8 @@ class Gcategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['com_id', 'parent_id', 'sort_order', 'if_show'], 'integer'],
-            [['gcate_name'], 'string', 'max' => 255],
+            [['pid', 'sort', 'is_show'], 'integer'],
+            [['name'], 'string', 'max' => 255],
             [['unit'], 'string', 'max' => 30],
         ];
     }
@@ -43,12 +42,11 @@ class Gcategory extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'gcate_id' => 'Gcate ID',
-            'com_id' => 'Com ID',
-            'gcate_name' => 'Gcate Name',
-            'parent_id' => 'Parent ID',
-            'sort_order' => 'Sort Order',
-            'if_show' => 'If Show',
+            'id' => 'Gcate ID',
+            'name' => 'Gcate Name',
+            'pid' => 'Parent ID',
+            'sort' => 'Sort Order',
+            'is_show' => 'If Show',
             'unit' => 'Unit',
         ];
     }
@@ -56,9 +54,9 @@ class Gcategory extends \yii\db\ActiveRecord
     public function fields()
     {
     	return [
-    		'gid'=>'gcate_id',
-    		'name'=>'gcate_name',
-    		'pid'=>'parent_id',
+    		'gid'=>'id',
+    		'name'=>'name',
+    		'pid'=>'pid',
     		'unit',
     	];	
     }

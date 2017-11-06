@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "xcpt_enquiry_order".
  *
- * @property integer $oid
+ * @property integer $id
  * @property integer $cate_id1
  * @property integer $cate_id2
  * @property string $cate_id
@@ -16,9 +16,9 @@ use Yii;
  * @property string $brand_names
  * @property string $params
  * @property string $img
- * @property string $project_name
- * @property string $project_region_parent_id
- * @property string $project_region_id
+ * @property string $pm_name
+ * @property string $area_id
+ * @property string $region_id
  * @property string $project_region_parent_name
  * @property string $project_region_name
  * @property string $project_address
@@ -40,8 +40,8 @@ use Yii;
  * @property integer $customer_journey
  * @property integer $deal_level
  * @property integer $deal_user_id
- * @property string $create_by_user_id
- * @property string $create_by_com_id
+ * @property string $uid
+ * @property string $cid
  * @property string $company
  * @property string $baojia_num
  * @property string $create_time
@@ -68,15 +68,15 @@ class EnquiryOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cate_id1', 'cate_id2', 'cate_id', 'project_region_parent_id', 'project_region_id', 'number', 'caigou_time', 'fabao_type', 'contact_is_open', 'status', 'fenpei_status', 'fenpei_by_user_id', 'fenpei_to_group_id', 'fenpei_to_user_id', 'fenpei_time', 'customer_journey', 'deal_level', 'deal_user_id', 'create_by_user_id', 'create_by_com_id', 'baojia_num', 'create_time', 'audit', 'gystj', 'cgcpbj', 'pm_id'], 'integer'],
-            [['cate_name', 'brand_names', 'project_name', 'project_region_parent_id', 'project_region_id', 'project_region_parent_name', 'project_region_name', 'project_address', 'number', 'caigou_time', 'pay_type', 'fabao_type', 'contact_name', 'mobile', 'create_by_user_id', 'create_time'], 'required'],
+            [['cate_id1', 'cate_id2', 'cate_id', 'area_id', 'region_id', 'number', 'caigou_time', 'fabao_type', 'contact_is_open', 'status', 'fenpei_status', 'fenpei_by_user_id', 'fenpei_to_group_id', 'fenpei_to_user_id', 'fenpei_time', 'customer_journey', 'deal_level', 'deal_user_id', 'uid', 'cid', 'baojia_num', 'create_time', 'audit', 'gystj', 'cgcpbj', 'pm_id'], 'integer'],
+            [['brand_names', 'pm_name', 'area_id', 'region_id', 'project_address', 'number', 'caigou_time', 'pay_type', 'fabao_type', 'contact_name', 'mobile', 'uid', 'create_time'], 'required'],
             [['params', 'enable'], 'string'],
             [['pricing'], 'number'],
             [['cate_name'], 'string', 'max' => 60],
             [['brand_ids', 'brand_names', 'pay_type', 'other_remark'], 'string', 'max' => 255],
             [['img'], 'string', 'max' => 200],
-            [['project_name', 'company'], 'string', 'max' => 90],
-            [['project_region_parent_name', 'project_region_name', 'contact_name'], 'string', 'max' => 30],
+            [['pm_name', 'company'], 'string', 'max' => 90],
+            [['contact_name'], 'string', 'max' => 30],
             [['project_address'], 'string', 'max' => 120],
             [['unit'], 'string', 'max' => 1],
             [['mobile'], 'string', 'max' => 11],
@@ -89,20 +89,17 @@ class EnquiryOrder extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'oid' => 'Oid',
+            'id' => 'id',
             'cate_id1' => 'Cate Id1',
             'cate_id2' => 'Cate Id2',
             'cate_id' => 'Cate ID',
-            'cate_name' => 'Cate Name',
             'brand_ids' => 'Brand Ids',
             'brand_names' => 'Brand Names',
             'params' => 'Params',
             'img' => 'Img',
-            'project_name' => 'Project Name',
-            'project_region_parent_id' => 'Project Region Parent ID',
-            'project_region_id' => 'Project Region ID',
-            'project_region_parent_name' => 'Project Region Parent Name',
-            'project_region_name' => 'Project Region Name',
+            'pm_name' => 'Project Name',
+            'area_id' => 'Project Region Parent ID',
+            'region_id' => 'Project Region ID',
             'project_address' => 'Project Address',
             'number' => 'Number',
             'unit' => 'Unit',
@@ -122,8 +119,8 @@ class EnquiryOrder extends \yii\db\ActiveRecord
             'customer_journey' => 'Customer Journey',
             'deal_level' => 'Deal Level',
             'deal_user_id' => 'Deal User ID',
-            'create_by_user_id' => 'Create By User ID',
-            'create_by_com_id' => 'Create By Com ID',
+            'uid' => 'Create By User ID',
+            'cid' => 'Create By Com ID',
             'company' => 'Company',
             'baojia_num' => 'Baojia Num',
             'create_time' => 'Create Time',

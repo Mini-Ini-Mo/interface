@@ -50,7 +50,7 @@ class EnquiryController extends ActiveController
 		$query = $modelClass::find();
 			
 		if($uid){
-			$query->where(['create_by_user_id'=>$uid]);
+			$query->where(['uid'=>$uid]);
 		}
 			
 		if($cateId){
@@ -66,7 +66,7 @@ class EnquiryController extends ActiveController
 	
 			'sort'=>[
 				'defaultOrder'=>[
-					'oid' => SORT_DESC,
+					'id' => SORT_DESC,
 				],
 			]
 		]);

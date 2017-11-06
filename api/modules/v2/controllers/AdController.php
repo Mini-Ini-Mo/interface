@@ -3,7 +3,6 @@ namespace api\modules\v2\controllers;
 
 use yii\rest\ActiveController;
 use yii\filters\auth\QueryParamAuth;
-use phpDocumentor\Reflection\Types\Parent_;
 use yii\data\ActiveDataProvider;
 
 class AdController extends ActiveController
@@ -41,14 +40,14 @@ class AdController extends ActiveController
 		$query = $modelClass::find();
 		
 		if($positionId){
-			$query->where(['position_id'=>$positionId,'enabled'=>$enable]);
+			$query->where(['position_id'=>$positionId,'enable'=>$enable]);
 		}
 		
 		return new ActiveDataProvider([
 			'query'=>$query,
 			'sort'=>[
 				'defaultOrder'=>[
-					'ad_id'=>SORT_DESC,	
+					'id'=>SORT_DESC,	
 				]	
 			]
 		]);
