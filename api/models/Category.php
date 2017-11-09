@@ -5,7 +5,7 @@ namespace api\models;
 use Yii;
 
 /**
- * This is the model class for table "xcpt_gcategory".
+ * This is the model class for table "{{%xcpt_category}}".
  *
  * @property string $id
  * @property string $name
@@ -14,14 +14,14 @@ use Yii;
  * @property integer $is_show
  * @property string $unit
  */
-class Gcategory extends \yii\db\ActiveRecord
+class Category extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'xcpt_gcategory';
+        return '{{%xcpt_category}}';
     }
 
     /**
@@ -42,22 +42,12 @@ class Gcategory extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Gcate ID',
-            'name' => 'Gcate Name',
-            'pid' => 'Parent ID',
-            'sort' => 'Sort Order',
-            'is_show' => 'If Show',
+            'id' => 'ID',
+            'name' => 'Name',
+            'pid' => 'Pid',
+            'sort' => 'Sort',
+            'is_show' => 'Is Show',
             'unit' => 'Unit',
         ];
-    }
-    
-    public function fields()
-    {
-    	return [
-    		'gid'=>'id',
-    		'name'=>'name',
-    		'pid'=>'pid',
-    		'unit',
-    	];	
     }
 }

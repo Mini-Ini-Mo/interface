@@ -4,9 +4,9 @@ namespace api\modules\v2\controllers;
 use yii\rest\ActiveController;
 use yii\filters\auth\QueryParamAuth;
 
-class NavController extends ActiveController
+class RegionController extends ActiveController
 {
-	public $modelClass = 'api\models\Category';
+	public $modelClass = 'api\models\Region';
 	
 	public function actions()
 	{
@@ -19,24 +19,24 @@ class NavController extends ActiveController
 	{
 		$behaviors = parent::behaviors();
 		$behaviors['authenticator'] = [
-			'class'=>QueryParamAuth::className(),
-			'tokenParam'=>'token',
-			'optional'=>[
-				'index','view'
-			]
+				'class'=>QueryParamAuth::className(),
+				'tokenParam'=>'token',
+				'optional'=>[
+						'index','view'
+				]
 		];
-		
+	
 		return $behaviors;
-	} 
+	}
 	
 	public function actionIndex()
 	{
 		$modelClass = $this->modelClass;
-		
+	
 		$data = [];
 		//获取顶级品类
 		$first = $modelClass::find()->where(['pid'=>0])->asArray()->all();
-		
+	
 		foreach($first as $k=>$f){
 			$data[$k] = $f;
 			//获取二级品类
@@ -52,8 +52,9 @@ class NavController extends ActiveController
 				}
 			}
 		}
-		
+	
 		return $data;
 	}
 	
+
 }
