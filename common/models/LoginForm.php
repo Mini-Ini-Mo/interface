@@ -1,78 +1,101 @@
 <?php
 namespace common\models;
 
-use Yii;
 use yii\base\Model;
+use common\models\User;
+use api\components\Hint;
+use yii\web\Response;
 
-/**
- * Login form
- */
 class LoginForm extends Model
 {
-    public $username;
-    public $password;
-    public $rememberMe = true;
-
-    private $_user;
-
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
-            ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
-            ['password', 'validatePassword'],
-        ];
-    }
-
-    /**
-     * Validates the password.
-     * This method serves as the inline validation for password.
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function validatePassword($attribute, $params)
-    {
-        if (!$this->hasErrors()) {
-            $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
-            }
-        }
-    }
-
-    /**
-     * Logs in a user using the provided username and password.
-     *
-     * @return bool whether the user is logged in successfully
-     */
-    public function login()
-    {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Finds user by [[username]]
-     *
-     * @return User|null
-     */
-    protected function getUser()
-    {
-        if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
-        }
-
-        return $this->_user;
-    }
+	public $username;
+	public $password;
+	public $rememberMe;
+	
+	private $_user;
+	
+	const GET_ACCESS_TOKEN = 'generate_access_token';
+	
+	public function init()
+	{
+		parent::init();
+		$this->on(self::GET_ACCESS_TOKEN,[$this,'onGenerateAccessToken']);
+	}
+	
+	/**
+	* @inhreitdoc
+	* 对客户端表单数据进行验证的rule
+	*/
+	public function rules()
+	{
+		return [
+			[['username','password'],'required'],
+			['password','validatePassword'],
+		];
+	}
+	
+	/**
+	* 自定义验证密码
+	* @date: 2017年9月21日 下午4:24:23
+	* @author: cuik
+	*/
+	public function validatePassword($attribute,$params)
+	{
+		if(!$this->hasErrors()){
+			$this->_user = $this->getUser();
+			if(!$this->_user || !$this->_user->validatePassword($this->username,$this->password)){
+				$this->addError($attribute,'用户名或密码错误');
+			}
+		}
+	}
+	
+	/**
+	* @inheritdoc
+	*/
+	public function attributeLabels()
+	{
+		return [
+			'username'=>'用户名',
+			'password'=>'密码',
+		];
+	}
+	
+	/**
+	* 判断用户是否登录成功
+	* @return boolean 
+	*/
+	public function login()
+	{
+		if($this->validate()){
+			$this->trigger(self::GET_ACCESS_TOKEN);
+			return $this->_user;
+		}else{
+			\Yii::$app->response->statusCode = 400;
+		}
+	}
+	
+	/**
+	* 根据用户名获取用户的认证信息
+	* @return: User|null
+	*/
+	public function getUser()
+	{
+		if($this->_user === null){
+			$this->_user = User::findByUsername($this->username);
+		}
+		return $this->_user;
+	}
+	
+	/**
+	* 登录校验成功后，为用户生成新的token
+	* 如果token失效，则重新生成token
+	*/
+	public function onGenerateAccessToken()
+	{
+		if(!User::accessTokenIsVaild($this->_user->access_token)){
+			$this->_user->generateAccessToken();
+			$this->_user->save(false);
+		}
+	}
+	
 }

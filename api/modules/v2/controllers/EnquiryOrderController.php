@@ -5,7 +5,7 @@ use yii\rest\ActiveController;
 use yii\filters\auth\QueryParamAuth;
 use yii\data\ActiveDataProvider;
 
-class EnquiryController extends ActiveController
+class EnquiryOrderController extends ActiveController
 {
 	public $modelClass = 'api\models\EnquiryOrder';
 	public $serializer = [
