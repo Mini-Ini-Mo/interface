@@ -13,7 +13,8 @@ use yii\data\ActiveDataProvider;
 
 class UserController extends ActiveController
 {
-	public $modelClass = 'api\models\User';
+	public $modelClass = 'common\models\User';
+	
 	public $serializer = [
 			'class' => 'yii\rest\Serializer',
 			'collectionEnvelope' => 'items',

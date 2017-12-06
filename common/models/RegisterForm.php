@@ -1,8 +1,8 @@
 <?php
-namespace api\models;
+namespace common\models;
 use yii\db\ActiveRecord;
-use api\models\User;
-use api\components\Hint;
+use common\models\User;
+use common\components\Hint;
 
 class RegisterForm extends ActiveRecord
 {

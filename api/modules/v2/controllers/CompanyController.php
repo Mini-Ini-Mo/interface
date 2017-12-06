@@ -15,7 +15,8 @@ class CompanyController extends ActiveController
      * Renders the index view for the module
      * @return string
      */
-    public $modelClass = 'api\models\Company';
+    public $modelClass = 'common\models\Company';
+    
     public $serializer = [
 			'class' => 'yii\rest\Serializer',
 			'collectionEnvelope' => 'items',

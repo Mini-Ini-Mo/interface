@@ -3,7 +3,7 @@ namespace common\models;
 
 use yii\base\Model;
 use common\models\User;
-use api\components\Hint;
+use common\components\Hint;
 use yii\web\Response;
 
 class LoginForm extends Model

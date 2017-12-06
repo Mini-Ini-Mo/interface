@@ -17,8 +17,6 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
-	public $children;
-	
     /**
      * @inheritdoc
      */
@@ -69,7 +67,7 @@ class Category extends \yii\db\ActiveRecord
     		'pid' => 'parent_id',
     		'sort' => 'sort_order',
     		'is_show' => 'if_show',
-    		'unit',
+    		'unit'
     	];
     }
     

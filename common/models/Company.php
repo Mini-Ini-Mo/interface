@@ -1,56 +1,56 @@
 <?php
 
-namespace api\models;
+namespace common\models;
 
 use Yii;
 
 /**
  * This is the model class for table "xcpt_company".
  *
- * @property string $id
- * @property integer $gid
+ * @property string $com_id
+ * @property integer $group_id
  * @property integer $shequ_id
- * @property string $name
- * @property string $short_name
- * @property string $sn
+ * @property string $com_name
+ * @property string $com_short_name
+ * @property string $com_sn
  * @property integer $estate_type
- * @property string $bank
- * @property string $bank_num
- * @property string $zczj
- * @property string $fddbr
- * @property string $fddbr_dh
- * @property string $zzjgdm
+ * @property string $com_bank
+ * @property string $com_bank_num
+ * @property string $com_zczj
+ * @property string $com_fddbr
+ * @property string $com_fddbr_dh
+ * @property string $com_zzjgdm
  * @property string $com_gsglh
  * @property string $com_yyzzdm
  * @property string $com_yyzz_pic
- * @property string $zzjgdmz_pic
- * @property integer $sssq
- * @property string $rzdw
- * @property string $post_code
- * @property integer $mode
- * @property integer $level
- * @property string $main_production
- * @property string $main_industry
- * @property string $main_industry2
- * @property string $main_industry3
- * @property integer $staff_amount_level
- * @property integer $turnover_level
- * @property integer $type
- * @property integer $zbdjg
- * @property string $phone
- * @property string $fax
- * @property string $address_code
- * @property string $address_text
- * @property string $instructions
+ * @property string $com_zzjgdmz_pic
+ * @property integer $com_sssq
+ * @property string $com_rzdw
+ * @property string $com_post_code
+ * @property integer $com_mode
+ * @property integer $com_level
+ * @property string $com_main_production
+ * @property string $com_main_industry
+ * @property string $com_main_industry2
+ * @property string $com_main_industry3
+ * @property integer $com_staff_amount_level
+ * @property integer $com_turnover_level
+ * @property integer $com_type
+ * @property integer $com_zbdjg
+ * @property string $com_phone
+ * @property string $com_fax
+ * @property string $com_address_code
+ * @property string $com_address_text
+ * @property string $com_instructions
  * @property integer $create_time
- * @property integer $info_status
- * @property string $money
+ * @property integer $com_info_status
+ * @property string $com_money
  * @property integer $cgrade
  * @property integer $region_id
  * @property string $region_name
  * @property string $domain
  * @property string $owner_name
- * @property integer $uid
+ * @property integer $owner_id
  * @property string $owner_card
  * @property integer $credit_value
  * @property string $praise_rate
@@ -58,27 +58,34 @@ use Yii;
  * @property integer $end_time
  * @property integer $sort_order
  * @property integer $recommended
- * @property integer $verify_status
- * @property string $logo
+ * @property integer $com_verify_status
+ * @property string $com_logo
  * @property string $added_s_id
  * @property string $home_page
- * @property string $email
- * @property string $dsdjz
- * @property string $dsdjh
- * @property string $zjndjzc
- * @property string $zjndjzcfzl
- * @property string $fdctdkfdj
- * @property string $fdckfzzzs
- * @property string $gdbj
- * @property string $jsncwbb
- * @property string $source
+ * @property string $com_email
+ * @property string $com_dsdjz
+ * @property string $com_dsdjh
+ * @property string $com_zjndjzc
+ * @property string $com_zjndjzcfzl
+ * @property string $com_fdctdkfdj
+ * @property string $com_fdckfzzzs
+ * @property string $com_gdbj
+ * @property string $com_jsncwbb
  * @property string $com_source
- * @property string $reject_reason
+ * @property string $com_main_category
+ * @property string $com_reject_reason
  * @property integer $has_store
  * @property integer $store_level
  * @property integer $if_pop_window
  * @property string $contact_man
  * @property string $contact_man_tel
+ * @property integer $prov_id
+ * @property integer $city_id
+ * @property integer $dist_id
+ * @property string $prov_name
+ * @property string $city_name
+ * @property string $dist_name
+ * @property string $tag_ids
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -96,19 +103,19 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['gid', 'create_time', 'uid'], 'required'],
-            [['gid', 'shequ_id', 'estate_type', 'sssq', 'mode', 'level', 'staff_amount_level', 'turnover_level', 'type', 'zbdjg', 'create_time', 'info_status', 'cgrade', 'region_id', 'uid', 'credit_value', 'end_time', 'sort_order', 'recommended', 'verify_status', 'has_store', 'store_level', 'if_pop_window'], 'integer'],
-            [['instructions'], 'string'],
-            [['money', 'praise_rate'], 'number'],
-            [['name', 'address_code', 'region_name'], 'string', 'max' => 100],
-            [['short_name', 'bank_num', 'zczj', 'fddbr', 'fddbr_dh', 'zzjgdm', 'com_gsglh', 'com_yyzzdm', 'fax'], 'string', 'max' => 20],
-            [['sn'], 'string', 'max' => 30],
-            [['bank', 'com_yyzz_pic', 'zzjgdmz_pic', 'main_industry3', 'close_reason', 'logo', 'added_s_id', 'email', 'dsdjz', 'jsncwbb', 'com_source', 'reject_reason'], 'string', 'max' => 255],
-            [['rzdw', 'dsdjh', 'zjndjzc', 'zjndjzcfzl', 'fdctdkfdj', 'fdckfzzzs', 'gdbj'], 'string', 'max' => 50],
-            [['post_code'], 'string', 'max' => 10],
-            [['main_production', 'main_industry', 'main_industry2', 'domain', 'owner_name', 'owner_card', 'source'], 'string', 'max' => 60],
-            [['phone', 'contact_man'], 'string', 'max' => 32],
-            [['address_text', 'home_page'], 'string', 'max' => 200],
+            [['group_id', 'create_time', 'owner_id'], 'required'],
+            [['group_id', 'shequ_id', 'estate_type', 'com_sssq', 'com_mode', 'com_level', 'com_staff_amount_level', 'com_turnover_level', 'com_type', 'com_zbdjg', 'create_time', 'com_info_status', 'cgrade', 'region_id', 'owner_id', 'credit_value', 'end_time', 'sort_order', 'recommended', 'com_verify_status', 'has_store', 'store_level', 'if_pop_window', 'prov_id', 'city_id', 'dist_id'], 'integer'],
+            [['com_instructions'], 'string'],
+            [['com_money', 'praise_rate'], 'number'],
+            [['com_name', 'com_address_code', 'region_name'], 'string', 'max' => 100],
+            [['com_short_name', 'com_bank_num', 'com_zczj', 'com_fddbr', 'com_fddbr_dh', 'com_zzjgdm', 'com_gsglh', 'com_yyzzdm', 'com_fax', 'prov_name', 'city_name', 'dist_name', 'tag_ids'], 'string', 'max' => 20],
+            [['com_sn'], 'string', 'max' => 30],
+            [['com_bank', 'com_yyzz_pic', 'com_zzjgdmz_pic', 'com_main_industry3', 'close_reason', 'com_logo', 'added_s_id', 'com_email', 'com_dsdjz', 'com_jsncwbb', 'com_main_category', 'com_reject_reason'], 'string', 'max' => 255],
+            [['com_rzdw', 'com_dsdjh', 'com_zjndjzc', 'com_zjndjzcfzl', 'com_fdctdkfdj', 'com_fdckfzzzs', 'com_gdbj'], 'string', 'max' => 50],
+            [['com_post_code'], 'string', 'max' => 10],
+            [['com_main_production', 'com_main_industry', 'com_main_industry2', 'domain', 'owner_name', 'owner_card', 'com_source'], 'string', 'max' => 60],
+            [['com_phone', 'contact_man'], 'string', 'max' => 32],
+            [['com_address_text', 'home_page'], 'string', 'max' => 200],
             [['contact_man_tel'], 'string', 'max' => 16],
         ];
     }
@@ -119,50 +126,50 @@ class Company extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Com ID',
-            'gid' => 'Group ID',
+            'com_id' => 'Com ID',
+            'group_id' => 'Group ID',
             'shequ_id' => 'Shequ ID',
-            'name' => 'Com Name',
-            'short_name' => 'Com Short Name',
-            'sn' => 'Com Sn',
+            'com_name' => 'Com Name',
+            'com_short_name' => 'Com Short Name',
+            'com_sn' => 'Com Sn',
             'estate_type' => 'Estate Type',
-            'bank' => 'Com Bank',
-            'bank_num' => 'Com Bank Num',
-            'zczj' => 'Com Zczj',
-            'fddbr' => 'Com Fddbr',
-            'fddbr_dh' => 'Com Fddbr Dh',
-            'zzjgdm' => 'Com Zzjgdm',
+            'com_bank' => 'Com Bank',
+            'com_bank_num' => 'Com Bank Num',
+            'com_zczj' => 'Com Zczj',
+            'com_fddbr' => 'Com Fddbr',
+            'com_fddbr_dh' => 'Com Fddbr Dh',
+            'com_zzjgdm' => 'Com Zzjgdm',
             'com_gsglh' => 'Com Gsglh',
             'com_yyzzdm' => 'Com Yyzzdm',
             'com_yyzz_pic' => 'Com Yyzz Pic',
-            'zzjgdmz_pic' => 'Com Zzjgdmz Pic',
-            'sssq' => 'Com Sssq',
-            'rzdw' => 'Com Rzdw',
-            'post_code' => 'Com Post Code',
-            'mode' => 'Com Mode',
-            'level' => 'Com Level',
-            'main_production' => 'Com Main Production',
-            'main_industry' => 'Com Main Industry',
-            'main_industry2' => 'Com Main Industry2',
-            'main_industry3' => 'Com Main Industry3',
-            'staff_amount_level' => 'Com Staff Amount Level',
-            'turnover_level' => 'Com Turnover Level',
-            'type' => 'Com Type',
-            'zbdjg' => 'Com Zbdjg',
-            'phone' => 'Com Phone',
-            'fax' => 'Com Fax',
-            'address_code' => 'Com Address Code',
-            'address_text' => 'Com Address Text',
-            'instructions' => 'Com Instructions',
+            'com_zzjgdmz_pic' => 'Com Zzjgdmz Pic',
+            'com_sssq' => 'Com Sssq',
+            'com_rzdw' => 'Com Rzdw',
+            'com_post_code' => 'Com Post Code',
+            'com_mode' => 'Com Mode',
+            'com_level' => 'Com Level',
+            'com_main_production' => 'Com Main Production',
+            'com_main_industry' => 'Com Main Industry',
+            'com_main_industry2' => 'Com Main Industry2',
+            'com_main_industry3' => 'Com Main Industry3',
+            'com_staff_amount_level' => 'Com Staff Amount Level',
+            'com_turnover_level' => 'Com Turnover Level',
+            'com_type' => 'Com Type',
+            'com_zbdjg' => 'Com Zbdjg',
+            'com_phone' => 'Com Phone',
+            'com_fax' => 'Com Fax',
+            'com_address_code' => 'Com Address Code',
+            'com_address_text' => 'Com Address Text',
+            'com_instructions' => 'Com Instructions',
             'create_time' => 'Create Time',
-            'info_status' => 'Com Info Status',
-            'money' => 'Com Money',
+            'com_info_status' => 'Com Info Status',
+            'com_money' => 'Com Money',
             'cgrade' => 'Cgrade',
             'region_id' => 'Region ID',
             'region_name' => 'Region Name',
             'domain' => 'Domain',
             'owner_name' => 'Owner Name',
-            'uid' => 'Owner ID',
+            'owner_id' => 'Owner ID',
             'owner_card' => 'Owner Card',
             'credit_value' => 'Credit Value',
             'praise_rate' => 'Praise Rate',
@@ -170,64 +177,101 @@ class Company extends \yii\db\ActiveRecord
             'end_time' => 'End Time',
             'sort_order' => 'Sort Order',
             'recommended' => 'Recommended',
-            'verify_status' => 'Com Verify Status',
-            'logo' => 'Com Logo',
+            'com_verify_status' => 'Com Verify Status',
+            'com_logo' => 'Com Logo',
             'added_s_id' => 'Added S ID',
             'home_page' => 'Home Page',
-            'email' => 'Com Email',
-            'dsdjz' => 'Com Dsdjz',
-            'dsdjh' => 'Com Dsdjh',
-            'zjndjzc' => 'Com Zjndjzc',
-            'zjndjzcfzl' => 'Com Zjndjzcfzl',
-            'fdctdkfdj' => 'Com Fdctdkfdj',
-            'fdckfzzzs' => 'Com Fdckfzzzs',
-            'gdbj' => 'Com Gdbj',
-            'jsncwbb' => 'Com Jsncwbb',
-            'source' => 'Com Source',
-            'com_source' => 'Com Main Category',
-            'reject_reason' => 'Com Reject Reason',
+            'com_email' => 'Com Email',
+            'com_dsdjz' => 'Com Dsdjz',
+            'com_dsdjh' => 'Com Dsdjh',
+            'com_zjndjzc' => 'Com Zjndjzc',
+            'com_zjndjzcfzl' => 'Com Zjndjzcfzl',
+            'com_fdctdkfdj' => 'Com Fdctdkfdj',
+            'com_fdckfzzzs' => 'Com Fdckfzzzs',
+            'com_gdbj' => 'Com Gdbj',
+            'com_jsncwbb' => 'Com Jsncwbb',
+            'com_source' => 'Com Source',
+            'com_main_category' => 'Com Main Category',
+            'com_reject_reason' => 'Com Reject Reason',
             'has_store' => 'Has Store',
             'store_level' => 'Store Level',
             'if_pop_window' => 'If Pop Window',
             'contact_man' => 'Contact Man',
             'contact_man_tel' => 'Contact Man Tel',
+            'prov_id' => 'Prov ID',
+            'city_id' => 'City ID',
+            'dist_id' => 'Dist ID',
+            'prov_name' => 'Prov Name',
+            'city_name' => 'City Name',
+            'dist_name' => 'Dist Name',
+            'tag_ids' => 'Tag Ids',
         ];
     }
     
     public function fields()
     {
     	return [
-    		'id'=>'id',
-    		'name'=>'name',
-    		'store_level'=>'store_level',
-    		'gid'=>'gid',
-    		'contact_tel'=>'contact_man_tel',
-    		'contact_man'=>'contact_man',
-    		'source'=>'source',
-    		'email'=>'email',
-    		'verify_status'=>'verify_status',
-    		'uid'=>'uid',
-    		'logo'=>'logo',
-    		'instructions'=>'instructions',
-    		'phone'=>'phone',
-    		'main_production'=>'main_production',
+    		'id' => 'com_id',
+    		'gid' => 'group_id',
+    		'comm_id' => 'shequ_id',
+    		'name' => 'com_name',
+    		'short_name' => 'com_short_name',
+    		'sn' => 'com_sn',
+    		'type' => 'estate_type',
+    		'bank' => 'com_bank',
+    		'bank_num' => 'com_bank_num',
+    			'com_level',
+    			'com_main_production',
+    			'com_main_industry',
+    			'com_main_industry2',
+    			'com_main_industry3',
+    			'com_address_code',
+    			'com_address_text',
+    			'com_instructions',
+    			'create_time',
+    			'com_info_status',
+    			'com_money',
+    			'cgrade',
+    			'region_id',
+    			'region_name',
+    			'domain',
+    			'owner_name',
+    			'owner_id',
+    			'owner_card',
+    			'sort_order',
+    			'com_verify_status',
+    			'com_logo',
+    			'added_s_id',
+    			'home_page',
+    			'com_email',
+    			'com_source',
+    			'store_level',
+    			'contact_man',
+    			'contact_man_tel',
+    			'prov_id',
+    			'city_id',
+    			'dist_id',
+    			'prov_name',
+    			'city_name',
+    			'dist_name',
+    			'tag_ids',
     	];
     }
     
     public function extraFields()
     {
     	return [
-    		'supplier'	
+    			'supplier'
     	];
     }
     
     /**
-    * Supplier List
-    * @date: 2017年10月17日 上午10:11:02
-    * @author: cuik
-    */
+     * Supplier List
+     * @date: 2017年10月17日 上午10:11:02
+     * @author: cuik
+     */
     public function getSupplier()
     {
-    	return $this->hasOne(SupplierList::className(), ['id'=>'id'])->where('id=:id',[':id'=>$this->id]);	
+    	return $this->hasOne(SupplierList::className(), ['id'=>'id'])->where('id=:id',[':id'=>$this->id]);
     }
 }
