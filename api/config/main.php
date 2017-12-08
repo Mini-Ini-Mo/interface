@@ -34,7 +34,7 @@ return [
 			} 
 		],
     	'user' => [ 
-			'identityClass' => 'api\models\User',
+			'identityClass' => 'common\models\User',
 			'enableAutoLogin' => true,
 			'enableSession' => false 
 		],
@@ -46,7 +46,7 @@ return [
 				[ 
 					'class' => 'yii\rest\UrlRule',
 					'controller' => [ 
-							'v2/user' 
+							'v2/user'
 					],
 					'extraPatterns' => [ 
 							'POST login' => 'login',

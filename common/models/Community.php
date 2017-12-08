@@ -5,15 +5,15 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "xcpt_community".
+ * This is the model class for table "xcpt_shequ".
  *
- * @property string $id
- * @property string $name
- * @property string $cover
- * @property string $spell
+ * @property string $qid
+ * @property string $shequ_name
+ * @property string $shequ_index_face
+ * @property string $shequ_pinyin
  * @property integer $enable
  * @property integer $sort
- * @property integer $pid
+ * @property integer $cqid
  */
 class Community extends \yii\db\ActiveRecord
 {
@@ -22,7 +22,7 @@ class Community extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'xcpt_community';
+        return 'xcpt_shequ';
     }
 
     /**
@@ -31,13 +31,13 @@ class Community extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'cover', 'spell', 'enable'], 'required'],
-            [['enable', 'sort', 'pid'], 'integer'],
-            [['name'], 'string', 'max' => 60],
-            [['cover'], 'string', 'max' => 200],
-            [['spell'], 'string', 'max' => 30],
-            [['name'], 'unique'],
-            [['spell'], 'unique'],
+            [['shequ_name', 'shequ_index_face', 'shequ_pinyin', 'enable'], 'required'],
+            [['enable', 'sort', 'cqid'], 'integer'],
+            [['shequ_name'], 'string', 'max' => 60],
+            [['shequ_index_face'], 'string', 'max' => 200],
+            [['shequ_pinyin'], 'string', 'max' => 30],
+            [['shequ_name'], 'unique'],
+            [['shequ_pinyin'], 'unique'],
         ];
     }
 
@@ -47,13 +47,21 @@ class Community extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'id',
-            'name' => 'Shequ Name',
-            'cover' => 'Shequ Index Face',
-            'spell' => 'Shequ Pinyin',
+            'qid' => 'Qid',
+            'shequ_name' => 'Shequ Name',
+            'shequ_index_face' => 'Shequ Index Face',
+            'shequ_pinyin' => 'Shequ Pinyin',
             'enable' => 'Enable',
             'sort' => 'Sort',
-            'pid' => 'pid',
+            'cqid' => 'Cqid',
         ];
+    }
+    
+    public function fields(){
+    	return [
+    			'id' => 'qid', 
+    			
+    	];
+    	
     }
 }
