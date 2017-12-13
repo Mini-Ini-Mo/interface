@@ -12,27 +12,12 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-use frontend\models\EntryForm;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-	public function actionEntry()
-	{
-		$model = new EntryForm;
-		$model->scenario = 'entry';
-		
-		if($model->load(Yii::$app->request->post()) && $model->validate()){
-			
-			return $this->render('entry-confirm',['model'=>$model]);
-		}else{
-			
-			return $this->render('entry',['model'=>$model]);
-		}
-	}
-	
     /**
      * @inheritdoc
      */
