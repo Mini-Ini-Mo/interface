@@ -89,6 +89,49 @@ use Yii;
  */
 class Company extends \yii\db\ActiveRecord
 {
+	public static $store_level_arr = [0=>'无店铺',10=> '标准店',20=> '旗舰店',];
+	
+	//服务商是【全国、本地、战略、定制、红包】；需求商是 【会员、战略】
+	public static $tag_arr = [1=>'全国',2=>'本地',3=>'战略',4=>'定制',5=>'红包',6=>'会员',7=>'中科',];
+	
+	public static $tag_group_arr = [5=>[0 => [3,6,7]],7=>	[0=>[1,2],1=>[3,4,5,7],],];
+	
+	public static function getTags($gid,$flag = false)
+	{
+		if($gid){
+			$arr = self::$tag_group_arr[$gid];
+		}
+		if($flag)
+		{
+			return $arr;
+		}else{
+			if($gid == 7){
+				$arr[0] = array_merge($arr[0],$arr[1]);
+			}
+			$values = array();
+			foreach($arr[0] as $a){
+				$values[$a] = self::$tag_arr[$a];
+			}
+			return $values;
+		}
+	}
+
+	//经营模式
+	public static $com_mode_arr = [1=>'生产厂家',2=>'经销代理',3=>'其他',];
+	
+	//公司规模
+	public static $staff_amount_arr = [1=>'0-100人',2=>'101-300人',3=>'301-500人',4=>'501-1000人',5=>'1001-5000人',6=>'5000人以上'];
+	
+	//公司性质
+	public static $com_type_arr = [1=>'国有企业',2=>'民营企业',3=>'外资企业',4=>'合资企业',5=>'其他'];
+	
+	//年营业额
+	public static $com_turnover_arr = [1=>'100万以下',2=>'101-500万',3=>'501-1000万',4=>'1001-5000万',5=>'5001-20000万',6=>'20000万以上'];
+	
+	//申请状态
+	public static $status = ['新申请','审核通过','未通过','已付费','企业关闭'];
+
+	
     /**
      * @inheritdoc
      */
@@ -127,15 +170,15 @@ class Company extends \yii\db\ActiveRecord
     {
         return [
             'com_id' => 'Com ID',
-            'group_id' => 'Group ID',
-            'shequ_id' => 'Shequ ID',
-            'com_name' => 'Com Name',
-            'com_short_name' => 'Com Short Name',
-            'com_sn' => 'Com Sn',
+            'group_id' => '公司类型',
+            'shequ_id' => '所属社区',
+            'com_name' => '公司名称',
+            'com_short_name' => '公司简称',
+            'com_sn' => '公司序列号',
             'estate_type' => 'Estate Type',
             'com_bank' => 'Com Bank',
             'com_bank_num' => 'Com Bank Num',
-            'com_zczj' => 'Com Zczj',
+            'com_zczj' => '注册资金',
             'com_fddbr' => 'Com Fddbr',
             'com_fddbr_dh' => 'Com Fddbr Dh',
             'com_zzjgdm' => 'Com Zzjgdm',
@@ -145,22 +188,22 @@ class Company extends \yii\db\ActiveRecord
             'com_zzjgdmz_pic' => 'Com Zzjgdmz Pic',
             'com_sssq' => 'Com Sssq',
             'com_rzdw' => 'Com Rzdw',
-            'com_post_code' => 'Com Post Code',
+            'com_post_code' => '企业邮编',
             'com_mode' => 'Com Mode',
             'com_level' => 'Com Level',
             'com_main_production' => 'Com Main Production',
             'com_main_industry' => 'Com Main Industry',
             'com_main_industry2' => 'Com Main Industry2',
             'com_main_industry3' => 'Com Main Industry3',
-            'com_staff_amount_level' => 'Com Staff Amount Level',
-            'com_turnover_level' => 'Com Turnover Level',
-            'com_type' => 'Com Type',
+            'com_staff_amount_level' => '企业规模',
+            'com_turnover_level' => '年营业额',
+            'com_type' => '公司性质',
             'com_zbdjg' => 'Com Zbdjg',
             'com_phone' => 'Com Phone',
             'com_fax' => 'Com Fax',
             'com_address_code' => 'Com Address Code',
             'com_address_text' => 'Com Address Text',
-            'com_instructions' => 'Com Instructions',
+            'com_instructions' => '公司简介',
             'create_time' => 'Create Time',
             'com_info_status' => 'Com Info Status',
             'com_money' => 'Com Money',
@@ -177,11 +220,11 @@ class Company extends \yii\db\ActiveRecord
             'end_time' => 'End Time',
             'sort_order' => 'Sort Order',
             'recommended' => 'Recommended',
-            'com_verify_status' => 'Com Verify Status',
+            'com_verify_status' => '审核状态',
             'com_logo' => 'Com Logo',
             'added_s_id' => 'Added S ID',
             'home_page' => 'Home Page',
-            'com_email' => 'Com Email',
+            'com_email' => '企业邮箱',
             'com_dsdjz' => 'Com Dsdjz',
             'com_dsdjh' => 'Com Dsdjh',
             'com_zjndjzc' => 'Com Zjndjzc',
@@ -194,17 +237,17 @@ class Company extends \yii\db\ActiveRecord
             'com_main_category' => 'Com Main Category',
             'com_reject_reason' => 'Com Reject Reason',
             'has_store' => 'Has Store',
-            'store_level' => 'Store Level',
+            'store_level' => '店铺级别',
             'if_pop_window' => 'If Pop Window',
-            'contact_man' => 'Contact Man',
-            'contact_man_tel' => 'Contact Man Tel',
+            'contact_man' => '联系人',
+            'contact_man_tel' => '联系电话',
             'prov_id' => 'Prov ID',
             'city_id' => 'City ID',
             'dist_id' => 'Dist ID',
             'prov_name' => 'Prov Name',
             'city_name' => 'City Name',
             'dist_name' => 'Dist Name',
-            'tag_ids' => 'Tag Ids',
+            'tag_ids' => '标签',
         ];
     }
     
@@ -266,7 +309,7 @@ class Company extends \yii\db\ActiveRecord
     }
     
     /**
-     * Supplier List
+     * 关联Supplier List
      * @date: 2017年10月17日 上午10:11:02
      * @author: cuik
      */
@@ -274,4 +317,29 @@ class Company extends \yii\db\ActiveRecord
     {
     	return $this->hasOne(SupplierList::className(), ['id'=>'id'])->where('id=:id',[':id'=>$this->id]);
     }
+ 
+    public function beforeValidate()
+    {
+    	if(Yii::$app->controller->action->id == 'update'){
+    		$this->tag_ids = (isset($this->tag_ids) && is_array($this->tag_ids))?implode(',', $this->tag_ids):"";
+    	}
+    	return true;
+    }
+    
+    /**
+    * 关联 User info ext
+    * @date: 2017年12月14日 下午4:38:53
+    * @author: cuik
+    */
+    public function getUserinfoext()
+    {
+    	return $this->hasOne(UserInfoExt::className(), ['user_id'=>'owner_id']);
+    }
+    
+    public function afterFind()
+    {
+    	if(Yii::$app->controller->action->id == 'update'){
+    		$this->tag_ids = isset($this->tag_ids)?explode(',', $this->tag_ids):"";
+    	}
+    } 
 }

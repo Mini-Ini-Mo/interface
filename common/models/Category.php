@@ -17,6 +17,7 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
+	public $parent_name;
     /**
      * @inheritdoc
      */
@@ -32,6 +33,9 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['com_id', 'parent_id', 'sort_order', 'if_show'], 'integer'],
+        	[['parent_name'], 'in',
+        		'range' => static::find()->select(['gcate_name'])->column(),
+        		'message' => 'Category "{value}" not found.'],
             [['gcate_name'], 'string', 'max' => 255],
             [['unit'], 'string', 'max' => 30],
         ];
@@ -43,13 +47,13 @@ class Category extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'gcate_id' => 'Gcate ID',
+            'gcate_id' => 'ID',
             'com_id' => 'Com ID',
-            'gcate_name' => 'Gcate Name',
-            'parent_id' => 'Parent ID',
-            'sort_order' => 'Sort Order',
-            'if_show' => 'If Show',
-            'unit' => 'Unit',
+            'gcate_name' => '品类',
+            'parent_id' => '父类',
+            'sort_order' => '排序',
+            'if_show' => '是否显示',
+            'unit' => '单位',
         ];
     }
     
@@ -71,4 +75,13 @@ class Category extends \yii\db\ActiveRecord
     	];
     }
     
+    public static function getCategorySource()
+    {
+    	$tableName = static::tableName();
+    	return (new \yii\db\Query())
+    	->select(['m.gcate_id', 'm.gcate_name', 'parent_name'=>'p.gcate_name'])
+    	->from(['m' => $tableName])
+    	->leftJoin(['p' => $tableName], '[[m.parent_id]]=[[p.gcate_id]]')
+    	->all(static::getDb());
+    }
 }
