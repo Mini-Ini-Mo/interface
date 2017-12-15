@@ -17,6 +17,9 @@ use Yii;
  */
 class Community extends \yii\db\ActiveRecord
 {
+    public $cqname;
+    public static $enable_mean = ['禁用','启用'];
+
     /**
      * @inheritdoc
      */
@@ -32,6 +35,7 @@ class Community extends \yii\db\ActiveRecord
     {
         return [
             [['shequ_name', 'shequ_index_face', 'shequ_pinyin', 'enable'], 'required'],
+            [['cqname'],'in','range'=>static::find()->select(['shequ_name'])->column(),'message' => 'Category "{value}" not found.'],
             [['enable', 'sort', 'cqid'], 'integer'],
             [['shequ_name'], 'string', 'max' => 60],
             [['shequ_index_face'], 'string', 'max' => 200],
@@ -48,12 +52,12 @@ class Community extends \yii\db\ActiveRecord
     {
         return [
             'qid' => 'Qid',
-            'shequ_name' => 'Shequ Name',
-            'shequ_index_face' => 'Shequ Index Face',
-            'shequ_pinyin' => 'Shequ Pinyin',
+            'shequ_name' => '社区',
+            'shequ_index_face' => '社区图片',
+            'shequ_pinyin' => '拼音',
             'enable' => 'Enable',
-            'sort' => 'Sort',
-            'cqid' => 'Cqid',
+            'sort' => '排序',
+            'cqid' => '父类',
         ];
     }
     
@@ -63,5 +67,16 @@ class Community extends \yii\db\ActiveRecord
     			
     	];
     	
+    }
+
+    //用于后台选择父类
+    public static function getCommunitySource()
+    {
+        $tableName = static::tableName();
+        return (new \yii\db\Query())
+        ->select(['m.qid', 'm.shequ_name', 'parent_name'=>'p.shequ_name'])
+        ->from(['m' => $tableName])
+        ->leftJoin(['p' => $tableName], '[[m.cqid]]=[[p.qid]]')
+        ->all(static::getDb());
     }
 }

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use leandrogehlen\treegrid\TreeGrid;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\CommunitySearh */
@@ -18,21 +19,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Community', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?= TreeGrid::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'qid',
-            'shequ_name',
-            'shequ_index_face',
-            'shequ_pinyin',
-            'enable',
-            // 'sort',
-            // 'cqid',
-
-            ['class' => 'yii\grid\ActionColumn'],
+        'keyColumnName' => 'qid',
+        'parentColumnName' => 'cqid',
+        'parentRootValue' => '0', //first parentId value
+        'pluginOptions' => [
+            'initialState' => 'collapsed',
         ],
+        'columns' => [
+           'shequ_name',
+            'enable',
+            ['class' => 'yii\grid\ActionColumn']
+        ]     
     ]); ?>
 </div>
