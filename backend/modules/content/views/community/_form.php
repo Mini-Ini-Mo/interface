@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\models\Community;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Community */
@@ -18,9 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'shequ_pinyin')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'enable')->textInput() ?>
+    <?= $form->field($model, 'enable')->dropDownList(Community::$enable_mean) ?>
 
-    <?= $form->field($model, 'sort')->textInput() ?>
+    <?= $form->field($model, 'sort')->input('number') ?>
 
     <?= $form->field($model, 'cqid')->textInput() ?>
 

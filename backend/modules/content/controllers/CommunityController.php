@@ -8,6 +8,7 @@ use backend\models\search\CommunitySearh;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * CommunityController implements the CRUD actions for Community model.
@@ -35,11 +36,13 @@ class CommunityController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CommunitySearh();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    	$query = Community::find();
+        $dataProvider = new ActiveDataProvider([
+        		'query'=>$query,
+        		'pagination'=>false
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

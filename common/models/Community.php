@@ -17,6 +17,8 @@ use Yii;
  */
 class Community extends \yii\db\ActiveRecord
 {
+	public static $enable_mean = [0=>'启用',1=>'禁用'];
+	
     /**
      * @inheritdoc
      */
@@ -38,6 +40,7 @@ class Community extends \yii\db\ActiveRecord
             [['shequ_pinyin'], 'string', 'max' => 30],
             [['shequ_name'], 'unique'],
             [['shequ_pinyin'], 'unique'],
+        	[['enable'],'in','range'=>[0,1]]
         ];
     }
 
