@@ -3,17 +3,16 @@
 namespace backend\modules\content\controllers;
 
 use Yii;
-use common\models\Community;
-use backend\models\search\CommunitySearh;
+use common\models\Goods;
+use backend\models\search\GoodsSearh;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
 
 /**
- * CommunityController implements the CRUD actions for Community model.
+ * GoodsController implements the CRUD actions for Goods model.
  */
-class CommunityController extends Controller
+class GoodsController extends Controller
 {
     /**
      * @inheritdoc
@@ -29,37 +28,24 @@ class CommunityController extends Controller
             ],
         ];
     }
-    
-    public function actions()
-    {
-    	return [
-    		'upload'=>[
-    			'class'=>'backend\actions\UploadFileAction',
-    			'path'=>'community',
-    			'attribute'=>'Community[shequ_index_face]'
-    		],	
-    	];
-    }
 
     /**
-     * Lists all Community models.
+     * Lists all Goods models.
      * @return mixed
      */
     public function actionIndex()
     {
-    	$query = Community::find();
-        $dataProvider = new ActiveDataProvider([
-        		'query'=>$query,
-        		'pagination'=>false
-        ]);
+        $searchModel = new GoodsSearh();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Community model.
+     * Displays a single Goods model.
      * @param string $id
      * @return mixed
      */
@@ -71,16 +57,16 @@ class CommunityController extends Controller
     }
 
     /**
-     * Creates a new Community model.
+     * Creates a new Goods model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Community();
+        $model = new Goods();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->qid]);
+            return $this->redirect(['view', 'id' => $model->goods_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -89,7 +75,7 @@ class CommunityController extends Controller
     }
 
     /**
-     * Updates an existing Community model.
+     * Updates an existing Goods model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -99,7 +85,7 @@ class CommunityController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->qid]);
+            return $this->redirect(['view', 'id' => $model->goods_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -108,7 +94,7 @@ class CommunityController extends Controller
     }
 
     /**
-     * Deletes an existing Community model.
+     * Deletes an existing Goods model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -121,15 +107,15 @@ class CommunityController extends Controller
     }
 
     /**
-     * Finds the Community model based on its primary key value.
+     * Finds the Goods model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Community the loaded model
+     * @return Goods the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Community::findOne($id)) !== null) {
+        if (($model = Goods::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

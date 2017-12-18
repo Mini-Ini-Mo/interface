@@ -24,18 +24,20 @@ $this->registerJs($this->render('_script.js'));
     <?= Html::activeHiddenInput($model, 'cqid', ['id' => 'cqid']); ?>
 
     <?= $form->field($model, 'shequ_name')->textInput(['maxlength' => true]) ?>
-
+	<?php $uploadPath = "http://img.6gcc.com/".$model->shequ_index_face;?>
     <?= $form->field($model, 'shequ_index_face')->widget(FileInput::className(), [
     	'options' => ['accept' => 'image/*'],
     	'pluginOptions'=>[
-    		'previewFileType'=>'image',
-    		'uploadUrl'=>Url::toRoute(['upload'])
+        	'initialPreview' => "<img src=$uploadPath width=205>",
+    		// 需要展示的图片设置，比如图片的宽度等
+    		'initialPreviewConfig' => "205",
+    		'uploadUrl'=>Url::toRoute(['upload']),
     	]	
     ]) ?>
 
     <?= $form->field($model, 'shequ_pinyin')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'enable')->dropDownList(Community::$enable_mean) ?>
+    <?= $form->field($model, 'enable')->dropDownList(Community::$enable_mean,['prompt'=>'请选择']) ?>
 
     <?= $form->field($model, 'sort')->input('number') ?>
 

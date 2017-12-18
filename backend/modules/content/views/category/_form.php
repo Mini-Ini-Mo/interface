@@ -28,7 +28,7 @@ $this->registerJs($this->render('_script.js'));
 
     <?= $form->field($model, 'sort_order')->input('number') ?>
 
-    <?= $form->field($model, 'if_show')->dropDownList(['不显示','显示']) ?>
+    <?= $form->field($model, 'if_show')->dropDownList(['不显示','显示'],['prompt'=>'请选择']) ?>
 
     <?= $form->field($model, 'unit')->textInput(['maxlength' => true]) ?>
 

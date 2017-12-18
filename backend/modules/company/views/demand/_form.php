@@ -14,9 +14,9 @@ use common\models\Company;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'group_id')->dropDownList([5=>'地产商',7=>'供应商']) ?>
+    <?= $form->field($model, 'group_id')->dropDownList([5=>'地产商',7=>'供应商'],['prompt'=>'请选择']) ?>
 
-    <?= $form->field($model, 'shequ_id')->dropDownList(ArrayHelper::map(\common\models\Community::find()->where(['enable'=>1])->all(),'qid','shequ_name')) ?>
+    <?= $form->field($model, 'shequ_id')->dropDownList(ArrayHelper::map(\common\models\Community::find()->where(['enable'=>1])->all(),'qid','shequ_name'),['prompt'=>'请选择']) ?>
 
     <?= $form->field($model, 'com_name')->textInput(['maxlength' => true]) ?>
 

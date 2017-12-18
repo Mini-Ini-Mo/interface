@@ -17,16 +17,16 @@ class UploadFileAction extends Action
 		if(\Yii::$app->request->isPost){
 			$fileObj = UploadedFile::getInstanceByName($this->attribute);
 			//目标目录
-			if(!is_dir($this->path)){
-				@mkdir($this->path);
-			}
-	
-			if($model->validate()){
-				//文件名
-				$fileName = date('HiiHsHis').$fileObj->getBaseName().'.'.$fileObj->getExtension();
-				$filePath = $this->path.$fileName;
-				$fileObj->saveAs($filePath);
-			}
+			$filePath = \Yii::$app->params['uploadPath'].'upload/'.$this->path.'/';
+			if(!is_dir($filePath)){
+				@mkdir($filePath,0755,true);
+			} 
+
+			//文件名
+			$fileName = date('HiiHsHis').$fileObj->getBaseName().'.'.$fileObj->getExtension();
+			$toPath = $filePath.$fileName;
+			$fileObj->saveAs($toPath);
+			return $toPath;
 		}
 	}
 }
