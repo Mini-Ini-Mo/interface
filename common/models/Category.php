@@ -75,6 +75,7 @@ class Category extends \yii\db\ActiveRecord
     	];
     }
     
+    //用于后台选择父类
     public static function getCategorySource()
     {
     	$tableName = static::tableName();
