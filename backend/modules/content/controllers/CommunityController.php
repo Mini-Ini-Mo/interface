@@ -29,6 +29,17 @@ class CommunityController extends Controller
             ],
         ];
     }
+    
+    public function actions()
+    {
+    	return [
+    		'upload'=>[
+    			'class'=>'backend\actions\UploadFileAction',
+    			'path'=>'/community/',
+    			'attribute'=>'Community[shequ_index_face]'
+    		],	
+    	];
+    }
 
     /**
      * Lists all Community models.

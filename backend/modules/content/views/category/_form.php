@@ -2,9 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\modules\content\assets\AutocompleteAsset;
 use yii\helpers\Json;
 use common\models\Category;
+use backend\assets\autoComplete\AutocompleteAsset;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Category */

@@ -2,9 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\modules\content\assets\AutocompleteAsset;
 use yii\helpers\Json;
 use common\models\Community;
+use backend\assets\autoComplete\AutocompleteAsset;
+use kartik\file\FileInput;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Community */
@@ -23,7 +25,13 @@ $this->registerJs($this->render('_script.js'));
 
     <?= $form->field($model, 'shequ_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'shequ_index_face')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'shequ_index_face')->widget(FileInput::className(), [
+    	'options' => ['accept' => 'image/*'],
+    	'pluginOptions'=>[
+    		'previewFileType'=>'image',
+    		'uploadUrl'=>Url::toRoute(['upload'])
+    	]	
+    ]) ?>
 
     <?= $form->field($model, 'shequ_pinyin')->textInput(['maxlength' => true]) ?>
 

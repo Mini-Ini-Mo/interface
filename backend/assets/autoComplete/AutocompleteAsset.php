@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\content\assets;
+namespace backend\assets\autoComplete;
 
 use yii\web\AssetBundle;
 
@@ -15,7 +15,7 @@ class AutocompleteAsset extends AssetBundle
     /**
      * @inheritdoc
      */
-    public $sourcePath = '@backend/modules/content/assets';
+    public $sourcePath = '@backend/assets/autoComplete';
     /**
      * @inheritdoc
      */

@@ -1,10 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-<<<<<<< HEAD
-=======
-use yii\grid\GridView;
->>>>>>> 41d00d38d38a4e2055823537b2bbe376951eb5b8
 use leandrogehlen\treegrid\TreeGrid;
 
 /* @var $this yii\web\View */

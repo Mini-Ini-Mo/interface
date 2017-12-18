@@ -60,6 +60,7 @@ class Community extends \yii\db\ActiveRecord
             'enable' => 'Enable',
             'sort' => '排序',
             'cqid' => '父类',
+        	'cqname'=>'父类'
         ];
     }
     
