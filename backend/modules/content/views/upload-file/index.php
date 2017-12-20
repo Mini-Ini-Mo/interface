@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\models\UploadFile;
+use nerburish\masonryview\MasonryView;
+use yii\base\Widget;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\UploadFileSearh */
@@ -41,4 +43,38 @@ $this->params['breadcrumbs'][] = $this->title;
     		],
         ],
     ]); ?>
+    
+    <?= \nerburish\masonryview\MasonryView::widget([
+    		'dataProvider' => $dataProvider,
+    		'itemView' => '_item',
+    		'clientOptions' => [
+    				'gutterWidth' => 15,
+    		],
+    		'cssFile' => [
+    				//"@web/css/masonry-demo.css"
+    		]
+    ])?>
 </div>
+<style>
+/* ---- grid ---- */
+.grid {
+  box-sizing: border-box;
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- grid-item ---- */
+.grid-item {
+  width: 18%;
+  padding: 10px;  
+  margin: 10px 3px;
+  float: left;
+  background: #e4e4e4;
+  border-radius: 5px;
+}
+</style>

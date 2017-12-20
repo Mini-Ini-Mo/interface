@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\UploadFile;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\UploadFile */
@@ -30,9 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'file',
-            'status',
-            'category',
+            ['attribute'=> 'file','format'=>'raw','value'=>Html::img(\Yii::$app->params['img_old'].'/upload/'.$model->file,['width'=>'200px'])],
+            ['attribute'=>'status','value'=>function($model){
+				return UploadFile::$status_mean[$model->status];
+			}],
+            ['attribute'=>'category','value'=>function($model){
+				return UploadFile::$category_mean[$model->category];
+			}],
             'type',
             'create_time:datetime',
         ],

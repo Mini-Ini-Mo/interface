@@ -73,10 +73,12 @@ class UploadFile extends \yii\db\ActiveRecord
     
     public function upload()
     {
+    	$oldFile = $this->file;
+    	
     	//文件名
     	$filename = date('YmdHis',time()).'.'.$this->uploadFile->extension;
     	//文件保存路径
-    	$path = $this->category.'/'.date('Ymd',time()).'/';
+    	$path = $this->category.'/'.date('Ym',time()).'/';
     	
     	$this->name = $filename;
     	$this->type = $this->uploadFile->type;
@@ -87,9 +89,15 @@ class UploadFile extends \yii\db\ActiveRecord
     	{
     		if(!is_dir($this->uploadPath.$path))
     		{
-    			@mkdir($this->uploadPath.$path,0755,true);
+    			@mkdir($this->uploadPath.$path,777,true);
     		}
-    		$this->uploadFile->saveAs($this->uploadPath.$path.$filename);
+    		if($this->uploadFile->saveAs($this->uploadPath.$path.$filename) && !$this->isNewRecord)
+    		{
+    			//删除旧图
+    			if(file_exists($this->uploadPath.$oldFile)){
+    				@unlink($this->uploadPath.$oldFile);
+    			}
+    		}
 
     		return true;
     	}
