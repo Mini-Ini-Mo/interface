@@ -47,3 +47,6 @@ use common\models\Goods;
     <?php ActiveForm::end(); ?>
 
 </div>
+<script>
+
+</script>

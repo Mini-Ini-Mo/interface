@@ -26,7 +26,8 @@ class UploadFileAction extends Action
 			$fileName = date('HiiHsHis').$fileObj->getBaseName().'.'.$fileObj->getExtension();
 			$toPath = $filePath.$fileName;
 			$fileObj->saveAs($toPath);
-			return $toPath;
+			echo json_encode(
+					['data'=>$toPath]);
 		}
 	}
 }
