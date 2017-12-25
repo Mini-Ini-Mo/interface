@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Upload File', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <!-- ?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             	'template'=>'{view} {update} {delete}'	
     		],
         ],
-    ]); ?>
+    ]); ?-->
     
     <?= \nerburish\masonryview\MasonryView::widget([
     		'dataProvider' => $dataProvider,

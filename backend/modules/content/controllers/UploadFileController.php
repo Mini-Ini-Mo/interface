@@ -68,8 +68,7 @@ class UploadFileController extends Controller
 		
         if (Yii::$app->request->post() && $model->load(Yii::$app->request->post())) {
         	$model->uploadFile = UploadedFile::getInstance($model,'file');
-        	$model->create_time = time();
-        	if($model->upload() && $model->save(false))
+        	if($model->upload())
         	{
         		return $this->redirect(['view', 'id' => $model->id]);
         	}

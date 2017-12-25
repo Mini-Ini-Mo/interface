@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use common\models\UploadFile;
+use yii\web\UploadedFile;
 
 /**
  * CommunityController implements the CRUD actions for Community model.
@@ -28,17 +30,6 @@ class CommunityController extends Controller
                 ],
             ],
         ];
-    }
-    
-    public function actions()
-    {
-    	return [
-    		'upload'=>[
-    			'class'=>'backend\actions\UploadFileAction',
-    			'path'=>'community',
-    			'attribute'=>'Community[shequ_index_face]'
-    		],	
-    	];
     }
 
     /**
@@ -78,9 +69,21 @@ class CommunityController extends Controller
     public function actionCreate()
     {
         $model = new Community();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->qid]);
+        
+        if ($model->load(Yii::$app->request->post())) {
+        	//处理上传图片
+        	$file = new UploadFile();
+        	$file->uploadFile = UploadedFile::getInstance($model,'shequ_index_face');
+        	if(!$file->uploadFile->getHasError()){
+        		$file->category = 'community';
+        		$file->status  = 'show';
+        		if($file->upload()){
+        			$model->shequ_index_face = $file->file;
+        		}
+        	}
+        	if($model->save()){
+            	return $this->redirect(['view', 'id' => $model->qid]);
+        	}
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -97,9 +100,21 @@ class CommunityController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->qid]);
+    
+        if ($model->load(Yii::$app->request->post())) {
+        	//处理上传图片
+        	$file = new UploadFile();
+        	$file->uploadFile = UploadedFile::getInstance($model,'shequ_index_face');
+        	if(!$file->uploadFile->getHasError()){
+        		$file->category = 'community';
+        		$file->status  = 'show';
+        		if($file->upload()){
+        			$model->shequ_index_face = $file->file;
+        		}
+        	}
+        	if($model->save()){
+            	return $this->redirect(['view', 'id' => $model->qid]);
+        	}
         } else {
             return $this->render('update', [
                 'model' => $model,

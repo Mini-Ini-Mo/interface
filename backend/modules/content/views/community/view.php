@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Community */
 
-$this->title = $model->qid;
-$this->params['breadcrumbs'][] = ['label' => 'Communities', 'url' => ['index']];
+$this->title = $model->shequ_name;
+$this->params['breadcrumbs'][] = ['label' => '社区列表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="community-view">
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'qid',
             'shequ_name',
-            'shequ_index_face',
+        	['attribute'=> 'shequ_index_face','format'=>'raw','value'=>Html::img(\Yii::$app->params['img'].'/upload/'.$model->shequ_index_face,['width'=>'200px'])],
             'shequ_pinyin',
             'enable',
             'sort',

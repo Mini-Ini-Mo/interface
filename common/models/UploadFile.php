@@ -84,6 +84,7 @@ class UploadFile extends \yii\db\ActiveRecord
     	$this->type = $this->uploadFile->type;
     	$this->size = $this->uploadFile->size;
     	$this->file = $path.$filename;
+    	$this->create_time = time();
     	
     	if($this->validate(['uploadFile','name','type','size','file','status','category','type']))
     	{
@@ -91,7 +92,7 @@ class UploadFile extends \yii\db\ActiveRecord
     		{
     			@mkdir($this->uploadPath.$path,777,true);
     		}
-    		if($this->uploadFile->saveAs($this->uploadPath.$path.$filename) && !$this->isNewRecord)
+    		if($this->uploadFile->saveAs($this->uploadPath.$path.$filename) && $this->save(false) && !$this->isNewRecord)
     		{
     			//删除旧图
     			if(file_exists($this->uploadPath.$oldFile)){

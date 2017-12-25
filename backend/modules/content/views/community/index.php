@@ -29,7 +29,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
            'shequ_name',
             'enable',
-            ['class' => 'yii\grid\ActionColumn']
+            [
+            	'class' => 'yii\grid\ActionColumn',
+            	'template'=>'{view} {update} {delete}',
+            	'buttons'=>[
+            		'view' => function ($url, $model, $key) {
+            				$options = [
+            						'title' => Yii::t('yii', 'View'),
+            						'aria-label' => Yii::t('yii', 'View'),
+            						'data-pjax' => '0',
+            				];
+            				return Html::a('<span class="glyphicon glyphicon-eye-open"></span>',['community/view','id'=>$model->qid] , $options);
+            			},
+            		'update' => function ($url, $model, $key) {
+            			$options = [
+            					'title' => Yii::t('yii', 'Update'),
+            					'aria-label' => Yii::t('yii', 'Update'),
+            					'data-pjax' => '0',
+            			];
+            			return Html::a('<span class="glyphicon glyphicon-pencil"></span>',['community/update','id'=>$model->qid] , $options);
+            			},
+            		'delete' => function ($url, $model, $key) {
+            			$options = [
+            					'title' => Yii::t('yii', 'Delete'),
+            					'aria-label' => Yii::t('yii', 'Delete'),
+            					'data-pjax' => '0',
+            			];
+            			return Html::a('<span class="glyphicon glyphicon-trash"></span>',['community/delete','id'=>$model->qid] , $options);
+            			},
+    			]
+    		]
         ]     
     ]); ?>
 </div>

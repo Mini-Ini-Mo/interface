@@ -57,7 +57,7 @@ class Community extends \yii\db\ActiveRecord
             'shequ_name' => '社区',
             'shequ_index_face' => '社区图片',
             'shequ_pinyin' => '拼音',
-            'enable' => 'Enable',
+            'enable' => '状态',
             'sort' => '排序',
             'cqid' => '父类',
         	'cqname'=>'父类'

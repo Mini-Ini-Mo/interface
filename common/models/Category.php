@@ -53,6 +53,7 @@ class Category extends \yii\db\ActiveRecord
             'parent_id' => '父类',
             'sort_order' => '排序',
             'if_show' => '是否显示',
+        	'parent_name'=>'父类',
             'unit' => '单位',
         ];
     }
@@ -85,4 +86,5 @@ class Category extends \yii\db\ActiveRecord
     	->leftJoin(['p' => $tableName], '[[m.parent_id]]=[[p.gcate_id]]')
     	->all(static::getDb());
     }
+    
 }
