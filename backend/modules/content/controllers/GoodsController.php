@@ -4,10 +4,10 @@ namespace backend\modules\content\controllers;
 
 use Yii;
 use common\models\Goods;
-use backend\models\search\GoodsSearh;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\search\GoodsSearh;
 
 /**
  * GoodsController implements the CRUD actions for Goods model.

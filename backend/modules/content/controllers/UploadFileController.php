@@ -4,11 +4,11 @@ namespace backend\modules\content\controllers;
 
 use Yii;
 use common\models\UploadFile;
-use backend\models\search\UploadFileSearh;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use common\models\search\UploadFileSearh;
 
 /**
  * UploadFileController implements the CRUD actions for UploadFile model.

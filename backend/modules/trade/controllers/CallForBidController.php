@@ -4,10 +4,10 @@ namespace backend\modules\trade\controllers;
 
 use Yii;
 use common\models\CallForBid;
-use backend\models\search\CallForBidSearh;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\search\CallForBidSearh;
 
 /**
  * CallForBidController implements the CRUD actions for CallForBid model.
@@ -37,7 +37,6 @@ class CallForBidController extends Controller
     {
         $searchModel = new CallForBidSearh();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

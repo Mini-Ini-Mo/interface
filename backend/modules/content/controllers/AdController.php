@@ -4,12 +4,12 @@ namespace backend\modules\content\controllers;
 
 use Yii;
 use common\models\Ad;
-use backend\models\search\AdSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\UploadFile;
 use yii\web\UploadedFile;
+use commom\models\search\AdSearch;
 
 /**
  * AdController implements the CRUD actions for Ad model.

@@ -4,12 +4,12 @@ namespace backend\modules\company\controllers;
 
 use Yii;
 use common\models\Company;
-use backend\models\search\CompanySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\UserInfoExt;
 use common\models\User;
+use common\models\search\CompanySearch;
 
 /**
  * DemandController implements the CRUD actions for Company model.
