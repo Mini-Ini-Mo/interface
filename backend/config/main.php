@@ -24,6 +24,10 @@ return [
     	'content' => [
     		'class' => 'backend\modules\content\Module',
     	],
+    	//交易管理	
+    	'trade' => [
+    		'class' => 'backend\modules\trade\Module',
+    	],
     ],
     'components' => [
     	'authManager'=>[

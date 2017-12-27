@@ -3,19 +3,18 @@
 namespace backend\modules\content\controllers;
 
 use Yii;
-use common\models\Community;
-use backend\models\search\CommunitySearh;
+use common\models\Ad;
+use backend\models\search\AdSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
 use common\models\UploadFile;
 use yii\web\UploadedFile;
 
 /**
- * CommunityController implements the CRUD actions for Community model.
+ * AdController implements the CRUD actions for Ad model.
  */
-class CommunityController extends Controller
+class AdController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,25 +32,23 @@ class CommunityController extends Controller
     }
 
     /**
-     * Lists all Community models.
+     * Lists all Ad models.
      * @return mixed
      */
     public function actionIndex()
     {
-    	$query = Community::find();
-        $dataProvider = new ActiveDataProvider([
-        		'query'=>$query,
-        		'pagination'=>false
-        ]);
+        $searchModel = new AdSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Community model.
-     * @param string $id
+     * Displays a single Ad model.
+     * @param integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -62,27 +59,26 @@ class CommunityController extends Controller
     }
 
     /**
-     * Creates a new Community model.
+     * Creates a new Ad model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Community();
-        
+        $model = new Ad();
+
         if ($model->load(Yii::$app->request->post())) {
-        	//处理上传图片
         	$file = new UploadFile();
-        	$file->uploadFile = UploadedFile::getInstance($model,'shequ_index_face');
-        	if($file && !$file->uploadFile->getHasError()){
-        		$file->category = 'community';
+        	$file->uploadFile = UploadedFile::getInstance($model,'ad_img');
+        	if($file->uploadFile && !$file->uploadFile->getHasError()){
+        		$file->category = 'ad';
         		$file->status  = 'show';
         		if($file->upload()){
-        			$model->shequ_index_face = $file->file;
+        			$model->ad_img = $file->file;
         		}
         	}
         	if($model->save()){
-            	return $this->redirect(['view', 'id' => $model->qid]);
+            	return $this->redirect(['view', 'id' => $model->ad_id]);
         	}
         } else {
             return $this->render('create', [
@@ -92,28 +88,27 @@ class CommunityController extends Controller
     }
 
     /**
-     * Updates an existing Community model.
+     * Updates an existing Ad model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-    
+
         if ($model->load(Yii::$app->request->post())) {
-        	//处理上传图片
         	$file = new UploadFile();
-        	$file->uploadFile = UploadedFile::getInstance($model,'shequ_index_face');
+        	$file->uploadFile = UploadedFile::getInstance($model,'ad_img');
         	if(!$file->uploadFile->getHasError()){
-        		$file->category = 'community';
+        		$file->category = 'ad';
         		$file->status  = 'show';
         		if($file->upload()){
-        			$model->shequ_index_face = $file->file;
+        			$model->ad_img = $file->file;
         		}
         	}
         	if($model->save()){
-            	return $this->redirect(['view', 'id' => $model->qid]);
+            	return $this->redirect(['view', 'id' => $model->ad_id]);
         	}
         } else {
             return $this->render('update', [
@@ -123,9 +118,9 @@ class CommunityController extends Controller
     }
 
     /**
-     * Deletes an existing Community model.
+     * Deletes an existing Ad model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -136,15 +131,15 @@ class CommunityController extends Controller
     }
 
     /**
-     * Finds the Community model based on its primary key value.
+     * Finds the Ad model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Community the loaded model
+     * @param integer $id
+     * @return Ad the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Community::findOne($id)) !== null) {
+        if (($model = Ad::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

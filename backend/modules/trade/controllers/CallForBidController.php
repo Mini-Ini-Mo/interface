@@ -1,21 +1,18 @@
 <?php
 
-namespace backend\modules\content\controllers;
+namespace backend\modules\trade\controllers;
 
 use Yii;
-use common\models\Community;
-use backend\models\search\CommunitySearh;
+use common\models\CallForBid;
+use backend\models\search\CallForBidSearh;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\data\ActiveDataProvider;
-use common\models\UploadFile;
-use yii\web\UploadedFile;
 
 /**
- * CommunityController implements the CRUD actions for Community model.
+ * CallForBidController implements the CRUD actions for CallForBid model.
  */
-class CommunityController extends Controller
+class CallForBidController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,24 +30,22 @@ class CommunityController extends Controller
     }
 
     /**
-     * Lists all Community models.
+     * Lists all CallForBid models.
      * @return mixed
      */
     public function actionIndex()
     {
-    	$query = Community::find();
-        $dataProvider = new ActiveDataProvider([
-        		'query'=>$query,
-        		'pagination'=>false
-        ]);
+        $searchModel = new CallForBidSearh();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Community model.
+     * Displays a single CallForBid model.
      * @param string $id
      * @return mixed
      */
@@ -62,28 +57,16 @@ class CommunityController extends Controller
     }
 
     /**
-     * Creates a new Community model.
+     * Creates a new CallForBid model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Community();
-        
-        if ($model->load(Yii::$app->request->post())) {
-        	//处理上传图片
-        	$file = new UploadFile();
-        	$file->uploadFile = UploadedFile::getInstance($model,'shequ_index_face');
-        	if($file && !$file->uploadFile->getHasError()){
-        		$file->category = 'community';
-        		$file->status  = 'show';
-        		if($file->upload()){
-        			$model->shequ_index_face = $file->file;
-        		}
-        	}
-        	if($model->save()){
-            	return $this->redirect(['view', 'id' => $model->qid]);
-        	}
+        $model = new CallForBid();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->project_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -92,7 +75,7 @@ class CommunityController extends Controller
     }
 
     /**
-     * Updates an existing Community model.
+     * Updates an existing CallForBid model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -100,21 +83,9 @@ class CommunityController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-    
-        if ($model->load(Yii::$app->request->post())) {
-        	//处理上传图片
-        	$file = new UploadFile();
-        	$file->uploadFile = UploadedFile::getInstance($model,'shequ_index_face');
-        	if(!$file->uploadFile->getHasError()){
-        		$file->category = 'community';
-        		$file->status  = 'show';
-        		if($file->upload()){
-        			$model->shequ_index_face = $file->file;
-        		}
-        	}
-        	if($model->save()){
-            	return $this->redirect(['view', 'id' => $model->qid]);
-        	}
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->project_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -123,7 +94,7 @@ class CommunityController extends Controller
     }
 
     /**
-     * Deletes an existing Community model.
+     * Deletes an existing CallForBid model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -136,15 +107,15 @@ class CommunityController extends Controller
     }
 
     /**
-     * Finds the Community model based on its primary key value.
+     * Finds the CallForBid model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Community the loaded model
+     * @return CallForBid the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Community::findOne($id)) !== null) {
+        if (($model = CallForBid::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
