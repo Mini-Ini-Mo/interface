@@ -53,7 +53,7 @@ class CustomGoods extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'xcpt_custom_goods';
+        return 'xcpt_zydz_goods';
     }
 
     /**
@@ -124,4 +124,27 @@ class CustomGoods extends \yii\db\ActiveRecord
             'add_time' => 'Add Time',
         ];
     }
+    
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['gcate_id'=>'cate_id2']);
+    }
+    
+    public function extraFields()
+    {
+        return [
+            'category'
+        ];
+    }
+    
+    public function fields()
+    {
+        return [
+            'id' => 'goods_id',
+            'name' => 'goods_name',
+            'price' => 'market_price',
+            'image' => 'default_image',
+            ];
+    }
+    
 }
