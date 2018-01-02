@@ -33,11 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
     	<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">报名情况</a></li>
     	<li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">资审结果</a></li>
     	<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">招标文件</a></li>
-    	<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">回标文件</a></li>
+    	<li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">回标文件</a></li>
     	<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">评标</a></li>
     	<li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">中标结果</a></li>
   	</ul>
   	
+  	<?php $query = CallForBidJoin::find()->where(['project_id'=>$model->project_id]);?>
+	    <?php $joinDataProvider = new ActiveDataProvider([
+	    		'query'=>$query,		
+	])?>
   	<div class="tab-content">
   		<br>
 	    <div role="tabpanel" class="tab-pane active" id="home">
@@ -52,12 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		    ]) ?>
 	    </div>
 	    <div role="tabpanel" class="tab-pane" id="profile">
-	    	<?php $query = CallForBidJoin::find()->where(['project_id'=>$model->project_id]);?>
-	    	<?php $dataProvider = new ActiveDataProvider([
-	    		'query'=>$query,		
-	    	])?>
 	    	<?= GridView::widget([
-		        'dataProvider' => $dataProvider,
+		        'dataProvider' => $joinDataProvider,
 		        'columns' => [
 		            ['class' => 'yii\grid\SerialColumn'],
 		        		'shop_id',
@@ -69,7 +69,17 @@ $this->params['breadcrumbs'][] = $this->title;
 		    ]); ?>
 	    </div>
 	    <div role="tabpanel" class="tab-pane" id="messages">
-	    
+	    	<?= GridView::widget([
+		        'dataProvider' => $joinDataProvider,
+		        'columns' => [
+		            ['class' => 'yii\grid\SerialColumn'],
+		        		'shop_id',
+		        		'lianxiren',
+		        		'lianxiren_p',
+		        		'baoming_time',
+		        		'status'
+		        ],
+		    ]); ?>
 	    </div>
 	    <div role="tabpanel" class="tab-pane" id="settings">
 	    	<?= DetailView::widget([
@@ -79,6 +89,17 @@ $this->params['breadcrumbs'][] = $this->title;
 		            'toubiao_time:datetime',
 		            'kaibiao_time',
 		         
+		        ],
+		    ]) ?>
+	    </div>
+	    <div role="tabpanel" class="tab-pane" id="hb">
+	    	<?= DetailView::widget([
+		        'model' => $model,
+		        'attributes' => [
+		            'shop_id',
+		            'cate_name',
+		            'baoming_time:datetime',
+		        	'zb_status',
 		        ],
 		    ]) ?>
 	    </div>
